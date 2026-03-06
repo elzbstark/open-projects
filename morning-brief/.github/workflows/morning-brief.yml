@@ -1,0 +1,59 @@
+name: Morning Brief
+on:
+  schedule:
+    - cron: '0 15 * * *'   # 7:00 AM PST (UTC-8); change to 14:00 for PDT
+  workflow_dispatch:         # allows manual trigger for testing
+
+jobs:
+  morning-brief:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Install Claude CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Install Python dependencies
+        run: pip install spotipy mcp[cli] -q
+
+      - name: Restore credentials
+        run: |
+          mkdir -p "$HOME/.google_workspace_mcp/credentials"
+          mkdir -p spotify-mcp
+          echo '${{ secrets.GOOGLE_OAUTH_TOKEN }}' > "$HOME/.google_workspace_mcp/credentials/your-email@gmail.com.json"
+          echo '${{ secrets.SPOTIFY_CACHE }}' > spotify-mcp/.cache
+          cp .mcp.github.json .mcp.json
+
+      - name: Refresh Google OAuth token
+        run: python automation/refresh-google-token.py
+
+      - name: Write .env
+        run: |
+          echo "GMAIL_APP_PASSWORD=${{ secrets.GMAIL_APP_PASSWORD }}" > automation/.env
+          echo "SEND_FROM=your-email@gmail.com" >> automation/.env
+          echo "SEND_TO=your-email@gmail.com" >> automation/.env
+
+      - name: Run morning brief
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PROJECT_ROOT: ${{ github.workspace }}
+        run: python automation/morning-brief.py
+
+      - name: Persist throughput.json
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git add Context/throughput.json || true
+          git diff --staged --quiet || git commit -m "chore: update throughput.json [skip ci]"
+          git push || true

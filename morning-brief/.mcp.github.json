@@ -1,0 +1,35 @@
+{
+  "mcpServers": {
+    "spotify": {
+      "command": "python",
+      "args": [
+        "spotify-mcp/server.py"
+      ],
+      "env": {
+        "SPOTIFY_CLIENT_ID": "YOUR_SPOTIFY_CLIENT_ID",
+        "SPOTIFY_CLIENT_SECRET": "YOUR_SPOTIFY_CLIENT_SECRET",
+        "SPOTIFY_REDIRECT_URI": "http://127.0.0.1:8888/callback",
+        "SPOTIFY_CACHE_PATH": "/path/to/spotify-mcp/.cache"
+      }
+    },
+    "google-workspace-lz": {
+      "command": "uvx",
+      "args": [
+        "workspace-mcp",
+        "--single-user",
+        "--tools",
+        "tasks",
+        "docs",
+        "drive",
+        "sheets",
+        "calendar",
+        "--read-only"
+      ],
+      "env": {
+        "GOOGLE_OAUTH_CLIENT_ID": "YOUR_GOOGLE_OAUTH_CLIENT_ID",
+        "GOOGLE_OAUTH_CLIENT_SECRET": "YOUR_GOOGLE_OAUTH_CLIENT_SECRET",
+        "USER_GOOGLE_EMAIL": "YOUR_EMAIL@gmail.com"
+      }
+    }
+  }
+}

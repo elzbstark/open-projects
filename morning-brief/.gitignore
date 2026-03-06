@@ -1,0 +1,6 @@
+automation/.env
+automation/brief.log
+spotify-mcp/venv/
+spotify-mcp/.cache
+*.pyc
+__pycache__/
