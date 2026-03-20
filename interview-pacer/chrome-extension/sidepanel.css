@@ -1,0 +1,283 @@
+/* Interview Pacer Side Panel — dark theme matching the app */
+
+:root {
+  --bg: #111827;        /* gray-900 */
+  --surface: #1f2937;   /* gray-800 */
+  --border: #374151;    /* gray-700 */
+  --text: #e5e7eb;      /* gray-200 */
+  --muted: #9ca3af;     /* gray-400 */
+  --dimmed: #4b5563;    /* gray-600 */
+
+  --green: #4ade80;
+  --yellow: #facc15;
+  --red: #f87171;
+  --urgent: #ef4444;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── No-session state ── */
+.no-session {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 10px;
+  color: var(--muted);
+  text-align: center;
+  padding: 24px;
+}
+
+.no-session-icon {
+  font-size: 40px;
+  margin-bottom: 4px;
+}
+
+.no-session-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.no-session-msg {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ── HUD layout ── */
+.hud {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 10px;
+  min-height: 100vh;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ── Session label ── */
+.session-label {
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+  letter-spacing: 0.03em;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Current section block ── */
+.current-section-block {
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.current-section-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.timer-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.timer-elapsed {
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.timer-sep {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.timer-budget {
+  font-size: 14px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Progress bars ── */
+.progress-bar-wrap {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease, background-color 0.3s ease;
+  background: var(--green);
+}
+
+/* ── Pace badge ── */
+.pace-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 999px;
+  align-self: flex-start;
+}
+
+.pace-badge.on-pace  { background: rgba(74,222,128,0.15); color: var(--green); }
+.pace-badge.warning  { background: rgba(250,204,21,0.15);  color: var(--yellow); }
+.pace-badge.over-time { background: rgba(248,113,113,0.15); color: var(--red); }
+.pace-badge.move-on  { background: rgba(239,68,68,0.2);    color: var(--urgent); }
+
+/* ── Total block ── */
+.total-block {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.total-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.total-timer {
+  font-size: 11px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Section outline list ── */
+.section-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+}
+
+.section-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.section-row.completed {
+  color: var(--dimmed);
+}
+
+.section-row.active {
+  background: var(--surface);
+  font-weight: 600;
+}
+
+.section-row.upcoming {
+  color: var(--dimmed);
+}
+
+.section-check {
+  font-size: 11px;
+  color: var(--dimmed);
+  width: 14px;
+  flex-shrink: 0;
+}
+
+.section-name {
+  flex: 1;
+}
+
+.section-elapsed {
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* ── Controls ── */
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0 4px;
+  border-top: 1px solid var(--border);
+}
+
+.ctrl-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.ctrl-btn:hover {
+  background: var(--border);
+}
+
+.ctrl-btn-primary {
+  padding: 6px 20px;
+  background: #1e3a5f;
+  border-color: #2563eb;
+  color: #93c5fd;
+}
+
+.ctrl-btn-primary:hover {
+  background: #1d4ed8;
+  color: #fff;
+}
+
+/* Color overrides driven by pace class on .hud */
+.hud.on-pace  .progress-bar.pace { background: var(--green); }
+.hud.warning  .progress-bar.pace { background: var(--yellow); }
+.hud.over-time .progress-bar.pace { background: var(--red); }
+.hud.move-on  .progress-bar.pace { background: var(--urgent); }
+
+.hud.on-pace  .current-section-name { color: var(--green); }
+.hud.warning  .current-section-name { color: var(--yellow); }
+.hud.over-time .current-section-name { color: var(--red); }
+.hud.move-on  .current-section-name { color: var(--urgent); }

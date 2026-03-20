@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interview Pacer</title>
+  <link rel="stylesheet" href="sidepanel.css" />
+</head>
+<body>
+  <div id="root">
+    <!-- No-session state -->
+    <div id="no-session" class="no-session">
+      <div class="no-session-icon">⏱</div>
+      <div class="no-session-title">Interview Pacer</div>
+      <div class="no-session-msg">No active session.<br>Start a live session in the app.</div>
+    </div>
+
+    <!-- Active session HUD (hidden until session is active) -->
+    <div id="hud" class="hud hidden">
+
+      <!-- Session label -->
+      <div id="session-label" class="session-label"></div>
+
+      <!-- Current section -->
+      <div class="current-section-block">
+        <div id="current-section-name" class="current-section-name"></div>
+        <div class="timer-row">
+          <span id="section-elapsed" class="timer-elapsed"></span>
+          <span class="timer-sep">/</span>
+          <span id="section-budget" class="timer-budget"></span>
+        </div>
+        <div id="pace-bar-wrap" class="progress-bar-wrap">
+          <div id="pace-bar" class="progress-bar"></div>
+        </div>
+        <div id="pace-badge" class="pace-badge"></div>
+      </div>
+
+      <!-- Total progress -->
+      <div class="total-block">
+        <div class="total-label-row">
+          <span class="total-label">Total</span>
+          <span id="total-timer" class="total-timer"></span>
+        </div>
+        <div id="total-bar-wrap" class="progress-bar-wrap">
+          <div id="total-bar" class="progress-bar"></div>
+        </div>
+      </div>
+
+      <!-- Section outline -->
+      <div id="section-list" class="section-list"></div>
+
+      <!-- Controls -->
+      <div class="controls">
+        <button id="btn-prev" class="ctrl-btn" title="Previous section">←</button>
+        <button id="btn-playpause" class="ctrl-btn ctrl-btn-primary" title="Pause / Resume">⏸</button>
+        <button id="btn-next" class="ctrl-btn" title="Next section">→</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>
