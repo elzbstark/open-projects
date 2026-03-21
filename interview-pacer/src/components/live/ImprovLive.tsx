@@ -29,6 +29,51 @@ export function ImprovLive({ session, onExit }: ImprovLiveProps) {
   );
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  // Write live state to localStorage for Chrome extension to read
+  useEffect(() => {
+    const payload = {
+      sessionId: session.id,
+      companyName: session.companyName,
+      templateName: session.templateName,
+      activeSectionIndex: timer.activeSectionIndex,
+      isRunning: timer.isRunning,
+      sectionElapsed: timer.sectionElapsed,
+      sections: session.sections.map((s) => ({
+        name: s.name,
+        durationSeconds: s.durationSeconds,
+      })),
+      totalBudget,
+      updatedAt: Date.now(),
+    };
+    localStorage.setItem('interview-pacer-live-state', JSON.stringify(payload));
+  }, [timer, session, totalBudget]);
+
+  // Poll for commands from Chrome extension
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const raw = localStorage.getItem('interview-pacer-command');
+      if (!raw) return;
+      localStorage.removeItem('interview-pacer-command');
+      try {
+        const { command } = JSON.parse(raw) as { command: string; issuedAt: number };
+        if (command === 'pause' || command === 'resume') togglePause();
+        else if (command === 'next') nextSection();
+        else if (command === 'prev') prevSection();
+      } catch {
+        // ignore malformed commands
+      }
+    }, 500);
+    return () => clearInterval(interval);
+  }, [togglePause, nextSection, prevSection]);
+
+  // Clear localStorage on unmount
+  useEffect(() => {
+    return () => {
+      localStorage.removeItem('interview-pacer-live-state');
+      localStorage.removeItem('interview-pacer-command');
+    };
+  }, []);
+
   // Auto-focus notes textarea when active section changes
   useEffect(() => {
     if (textareaRef.current) {

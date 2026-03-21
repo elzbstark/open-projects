@@ -20,7 +20,7 @@ export function TotalProgressBar({
     <div className="px-4 py-3 border-b border-gray-700">
       <div className="flex justify-between items-baseline mb-2">
         <span className="font-semibold text-white text-sm">
-          {companyName} — {templateName}
+          {companyName}: {templateName}
         </span>
       </div>
       <div className="flex items-center gap-3">
