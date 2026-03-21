@@ -22,7 +22,19 @@ export function LiveSidebar({ session, onExit }: LiveSidebarProps) {
     reset,
   } = useTimer(session.sections);
 
-  const [collapsedActive, setCollapsedActive] = useState(false);
+  // Track which sections are manually collapsed; active section starts expanded
+  const [collapsedSections, setCollapsedSections] = useState<Set<number>>(
+    () => new Set(Array.from({ length: session.sections.length }, (_, i) => i).filter(i => i !== 0))
+  );
+
+  const toggleCollapse = (i: number) => {
+    setCollapsedSections(prev => {
+      const next = new Set(prev);
+      if (next.has(i)) next.delete(i);
+      else next.add(i);
+      return next;
+    });
+  };
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Write live state to localStorage for Chrome extension to read
@@ -79,8 +91,8 @@ export function LiveSidebar({ session, onExit }: LiveSidebarProps) {
   }, [timer.activeSectionIndex]);
 
   const handleEscape = useCallback(() => {
-    setCollapsedActive((c) => !c);
-  }, []);
+    toggleCollapse(timer.activeSectionIndex);
+  }, [timer.activeSectionIndex]);
 
   useKeyboardShortcuts({
     onTogglePause: togglePause,
@@ -124,12 +136,8 @@ export function LiveSidebar({ session, onExit }: LiveSidebarProps) {
               elapsed={timer.sectionElapsed[i] || 0}
               paceStatus={getPaceStatus(i)}
               nextSectionName={session.sections[i + 1]?.name}
-              collapsed={i === timer.activeSectionIndex ? collapsedActive : true}
-              onToggleCollapse={() => {
-                if (i === timer.activeSectionIndex) {
-                  setCollapsedActive((c) => !c);
-                }
-              }}
+              collapsed={collapsedSections.has(i)}
+              onToggleCollapse={() => toggleCollapse(i)}
             />
           </div>
         ))}

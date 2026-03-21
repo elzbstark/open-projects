@@ -69,11 +69,18 @@ export function SectionCard({
             ({formatTime(section.durationSeconds)})
           </span>
         </div>
-        {isActive && (
-          <span className="text-sm font-mono text-gray-300">
-            {formatTime(elapsed)} / {formatTime(section.durationSeconds)}
-          </span>
-        )}
+        <div className="flex items-center gap-2">
+          {isActive && (
+            <span className="text-sm font-mono text-gray-300">
+              {formatTime(elapsed)} / {formatTime(section.durationSeconds)}
+            </span>
+          )}
+          {section.content && (
+            <span className={`text-xs text-gray-500 transition-transform duration-200 ${collapsed ? '' : 'rotate-180'}`}>
+              ▼
+            </span>
+          )}
+        </div>
       </button>
 
       {/* Timer bar for active section */}
@@ -87,10 +94,10 @@ export function SectionCard({
         </div>
       )}
 
-      {/* Content - expanded when active and not manually collapsed */}
-      {isActive && !collapsed && section.content && (
+      {/* Content - expanded when not collapsed */}
+      {!collapsed && section.content && (
         <div className="px-3 pb-3 pt-1">
-          <MarkdownRenderer content={section.content} large />
+          <MarkdownRenderer content={section.content} large={isActive} />
         </div>
       )}
 
