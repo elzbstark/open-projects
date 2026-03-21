@@ -76,8 +76,8 @@ export function SectionCard({
             </span>
           )}
           {section.content && (
-            <span className={`text-xs text-gray-500 transition-transform duration-200 ${collapsed ? '' : 'rotate-180'}`}>
-              ▼
+            <span className={`text-xs text-gray-500 transition-transform duration-200 inline-block ${collapsed ? '' : 'rotate-90'}`}>
+              ›
             </span>
           )}
         </div>

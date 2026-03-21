@@ -30,7 +30,12 @@ export function SessionList({ sessions, selectedId, onSelect, onLaunch, onDelete
           }`}
         >
           <div className="min-w-0">
-            <span className="text-sm text-white truncate block">{s.companyName} — {s.name}</span>
+            <div className="flex items-center gap-1.5">
+              <span className="text-sm text-white truncate">{s.companyName}: {s.name}</span>
+              {s.sessionType === 'improv' && (
+                <span className="text-xs px-1.5 py-0.5 bg-purple-900/60 text-purple-300 rounded shrink-0">Improv</span>
+              )}
+            </div>
             <span className="text-xs text-gray-500">{s.templateName}</span>
           </div>
           <div className="flex gap-1 shrink-0 ml-2">

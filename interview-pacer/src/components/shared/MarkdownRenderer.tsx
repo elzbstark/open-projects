@@ -50,7 +50,10 @@ function RenderLine({ line, large }: { line: string; large?: boolean }) {
     );
   }
 
-  // Headings (for display within a section)
+  // Headings (for display within a section) — check ### before ## (prefix order)
+  if (trimmed.startsWith('### ')) {
+    return <p className={`font-semibold text-gray-300 mt-2 ${textClass}`}>{renderInline(trimmed.slice(4))}</p>;
+  }
   if (trimmed.startsWith('## ')) {
     return <h3 className={`font-semibold mt-2 ${textClass}`}>{trimmed.slice(3)}</h3>;
   }

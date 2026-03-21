@@ -27,6 +27,15 @@ export function LiveSidebar({ session, onExit }: LiveSidebarProps) {
     () => new Set(Array.from({ length: session.sections.length }, (_, i) => i).filter(i => i !== 0))
   );
 
+  // Auto-expand the newly active section when advancing
+  useEffect(() => {
+    setCollapsedSections(prev => {
+      const next = new Set(prev);
+      next.delete(timer.activeSectionIndex);
+      return next;
+    });
+  }, [timer.activeSectionIndex]);
+
   const toggleCollapse = (i: number) => {
     setCollapsedSections(prev => {
       const next = new Set(prev);
