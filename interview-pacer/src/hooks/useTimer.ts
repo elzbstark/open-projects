@@ -9,99 +9,137 @@ function getPaceStatus(elapsed: number, budget: number): PaceStatus {
   return 'on-pace';
 }
 
-const initialTimerState: TimerState = {
-  isRunning: false,
-  activeSectionIndex: 0,
-  sectionElapsed: [],
-  totalElapsed: 0,
-  startedAt: null,
-  sectionStartedAt: null,
-};
+const TICK_MS = 250;
 
 export function useTimer(sections: SessionSection[]) {
+  // Accumulated elapsed seconds per section, snapshotted at each pause/section-advance.
+  // The active section's live elapsed = accumulated[i] + (Date.now() - runStartRef) / 1000.
+  const accumulatedRef = useRef<number[]>(sections.map(() => 0));
+  // Wall-clock ms when the current run started (null when paused).
+  const runStartRef = useRef<number | null>(null);
+  // Ref mirror of activeSectionIndex — avoids stale closures in tick.
+  const activeIndexRef = useRef(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
   const [timer, setTimer] = useState<TimerState>({
-    ...initialTimerState,
+    isRunning: false,
+    activeSectionIndex: 0,
     sectionElapsed: sections.map(() => 0),
+    totalElapsed: 0,
+    startedAt: null,
+    sectionStartedAt: null,
   });
-  const rafRef = useRef<number | null>(null);
-  const lastTickRef = useRef<number>(0);
+
+  // Compute current elapsed for every section based on wall-clock time.
+  // Accurate even when the tab has been hidden and setInterval was throttled.
+  function computeElapsed(): number[] {
+    const elapsed = [...accumulatedRef.current];
+    if (runStartRef.current !== null) {
+      const idx = activeIndexRef.current;
+      elapsed[idx] = (accumulatedRef.current[idx] || 0) + (Date.now() - runStartRef.current) / 1000;
+    }
+    return elapsed;
+  }
+
+  const tick = useCallback(() => {
+    const sectionElapsed = computeElapsed();
+    const totalElapsed = sectionElapsed.reduce((a, b) => a + b, 0);
+    setTimer((prev) => ({ ...prev, sectionElapsed, totalElapsed }));
+  }, []);
+
+  const startInterval = useCallback(() => {
+    if (intervalRef.current) return;
+    intervalRef.current = setInterval(tick, TICK_MS);
+  }, [tick]);
+
+  const stopInterval = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  }, []);
 
   // Reset when sections change
   useEffect(() => {
+    stopInterval();
+    accumulatedRef.current = sections.map(() => 0);
+    runStartRef.current = null;
+    activeIndexRef.current = 0;
     setTimer({
-      ...initialTimerState,
+      isRunning: false,
+      activeSectionIndex: 0,
       sectionElapsed: sections.map(() => 0),
+      totalElapsed: 0,
+      startedAt: null,
+      sectionStartedAt: null,
     });
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
   }, [sections.length]);
 
-  const tick = useCallback(() => {
-    const now = performance.now();
-    const delta = (now - lastTickRef.current) / 1000;
-    lastTickRef.current = now;
-
-    setTimer((prev) => {
-      if (!prev.isRunning) return prev;
-      const newElapsed = [...prev.sectionElapsed];
-      newElapsed[prev.activeSectionIndex] =
-        (newElapsed[prev.activeSectionIndex] || 0) + delta;
-      return {
-        ...prev,
-        sectionElapsed: newElapsed,
-        totalElapsed: prev.totalElapsed + delta,
-      };
-    });
-
-    rafRef.current = requestAnimationFrame(tick);
-  }, []);
-
   const start = useCallback(() => {
-    lastTickRef.current = performance.now();
+    const now = Date.now();
+    runStartRef.current = now;
+    startInterval();
     setTimer((prev) => ({
       ...prev,
       isRunning: true,
-      startedAt: prev.startedAt ?? Date.now(),
-      sectionStartedAt: prev.sectionStartedAt ?? Date.now(),
+      startedAt: prev.startedAt ?? now,
+      sectionStartedAt: prev.sectionStartedAt ?? now,
     }));
-    rafRef.current = requestAnimationFrame(tick);
-  }, [tick]);
+  }, [startInterval]);
 
   const pause = useCallback(() => {
-    setTimer((prev) => ({ ...prev, isRunning: false }));
-    if (rafRef.current) {
-      cancelAnimationFrame(rafRef.current);
-      rafRef.current = null;
-    }
-  }, []);
+    // Snapshot elapsed before stopping
+    accumulatedRef.current = computeElapsed();
+    runStartRef.current = null;
+    stopInterval();
+    const sectionElapsed = [...accumulatedRef.current];
+    setTimer((prev) => ({
+      ...prev,
+      isRunning: false,
+      sectionElapsed,
+      totalElapsed: sectionElapsed.reduce((a, b) => a + b, 0),
+    }));
+  }, [stopInterval]);
 
   const togglePause = useCallback(() => {
     setTimer((prev) => {
       if (prev.isRunning) {
-        if (rafRef.current) {
-          cancelAnimationFrame(rafRef.current);
-          rafRef.current = null;
-        }
-        return { ...prev, isRunning: false };
+        accumulatedRef.current = computeElapsed();
+        runStartRef.current = null;
+        stopInterval();
+        const sectionElapsed = [...accumulatedRef.current];
+        return {
+          ...prev,
+          isRunning: false,
+          sectionElapsed,
+          totalElapsed: sectionElapsed.reduce((a, b) => a + b, 0),
+        };
       } else {
-        lastTickRef.current = performance.now();
-        rafRef.current = requestAnimationFrame(tick);
+        const now = Date.now();
+        runStartRef.current = now;
+        startInterval();
         return {
           ...prev,
           isRunning: true,
-          startedAt: prev.startedAt ?? Date.now(),
-          sectionStartedAt: prev.sectionStartedAt ?? Date.now(),
+          startedAt: prev.startedAt ?? now,
+          sectionStartedAt: now,
         };
       }
     });
-  }, [tick]);
+  }, [startInterval, stopInterval]);
 
   const nextSection = useCallback(() => {
     setTimer((prev) => {
       const next = Math.min(prev.activeSectionIndex + 1, sections.length - 1);
       if (next === prev.activeSectionIndex) return prev;
+      // Snapshot current section's elapsed before advancing
+      accumulatedRef.current = computeElapsed();
+      if (prev.isRunning) runStartRef.current = Date.now();
+      activeIndexRef.current = next;
       return {
         ...prev,
         activeSectionIndex: next,
+        sectionElapsed: [...accumulatedRef.current],
         sectionStartedAt: Date.now(),
       };
     });
@@ -111,46 +149,43 @@ export function useTimer(sections: SessionSection[]) {
     setTimer((prev) => {
       const next = Math.max(prev.activeSectionIndex - 1, 0);
       if (next === prev.activeSectionIndex) return prev;
+      accumulatedRef.current = computeElapsed();
+      if (prev.isRunning) runStartRef.current = Date.now();
+      activeIndexRef.current = next;
       return {
         ...prev,
         activeSectionIndex: next,
+        sectionElapsed: [...accumulatedRef.current],
         sectionStartedAt: Date.now(),
       };
     });
   }, []);
 
   const reset = useCallback(() => {
-    if (rafRef.current) {
-      cancelAnimationFrame(rafRef.current);
-      rafRef.current = null;
-    }
+    stopInterval();
+    accumulatedRef.current = sections.map(() => 0);
+    runStartRef.current = null;
+    activeIndexRef.current = 0;
     setTimer({
-      ...initialTimerState,
+      isRunning: false,
+      activeSectionIndex: 0,
       sectionElapsed: sections.map(() => 0),
+      totalElapsed: 0,
+      startedAt: null,
+      sectionStartedAt: null,
     });
-  }, [sections.length]);
+  }, [sections.length, stopInterval]);
 
   // Cleanup on unmount
   useEffect(() => {
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, []);
-
-  // Derived state
-  const activePaceStatus = sections.length > 0
-    ? getPaceStatus(
-        timer.sectionElapsed[timer.activeSectionIndex] || 0,
-        sections[timer.activeSectionIndex]?.durationSeconds || 1
-      )
-    : 'on-pace' as PaceStatus;
+    return () => stopInterval();
+  }, [stopInterval]);
 
   const totalBudget = sections.reduce((s, sec) => s + sec.durationSeconds, 0);
   const totalRemaining = Math.max(0, totalBudget - timer.totalElapsed);
 
   return {
     timer,
-    activePaceStatus,
     totalBudget,
     totalRemaining,
     getPaceStatus: (index: number) =>
