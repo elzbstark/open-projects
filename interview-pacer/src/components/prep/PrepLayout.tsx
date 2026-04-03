@@ -150,7 +150,7 @@ export function PrepLayout({ onLaunchSession }: PrepLayoutProps) {
                 </button>
               </div>
               <SessionList
-                sessions={sessions}
+                sessions={sessions.filter((s) => !s.completedAt)}
                 selectedId={selectedSessionId}
                 onSelect={(id) => {
                   setSelectedSessionId(id);
@@ -163,6 +163,37 @@ export function PrepLayout({ onLaunchSession }: PrepLayoutProps) {
                 onDelete={handleDeleteSession}
               />
             </div>
+
+            {/* Completed sessions */}
+            {sessions.some((s) => s.completedAt) && (
+              <div>
+                <h2 className="text-lg font-semibold text-white mb-3">Completed</h2>
+                <div className="space-y-1">
+                  {sessions.filter((s) => s.completedAt).map((s) => (
+                    <div
+                      key={s.id}
+                      className="flex items-center justify-between px-3 py-2 rounded border border-transparent hover:bg-gray-800 transition-colors"
+                    >
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-sm text-gray-400 truncate">{s.companyName}: {s.name}</span>
+                          <span className="text-xs px-1.5 py-0.5 bg-gray-700 text-gray-500 rounded shrink-0">Done</span>
+                        </div>
+                        <span className="text-xs text-gray-600">
+                          {new Date(s.completedAt!).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => handleDeleteSession(s.id)}
+                        className="text-gray-600 hover:text-red-400 text-xs px-1 transition-colors shrink-0 ml-2"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Right column: Session editor or template preview */}

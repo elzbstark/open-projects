@@ -16,12 +16,13 @@ export default function App() {
   function setSessions(s: typeof sessions) { setSessionsState(s); saveSessions(s); }
   function handleLaunchSession(session: Session) { setLiveSession(session); setMode('live'); }
 
-  function handleExitLive(updatedSections?: SessionSection[]) {
+  function handleExitLive(updatedSections?: SessionSection[], completedAt?: string) {
     if (updatedSections && liveSession) {
       const updatedSession = {
         ...liveSession,
         sections: updatedSections,
         updatedAt: new Date().toISOString(),
+        ...(completedAt ? { completedAt } : {}),
       };
       const newSessions = sessions.map((s) => (s.id === updatedSession.id ? updatedSession : s));
       setSessionsState(newSessions);

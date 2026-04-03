@@ -234,6 +234,27 @@ html, body {
   color: var(--muted);
 }
 
+.section-chevron {
+  font-size: 14px;
+  color: var(--dimmed);
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+  line-height: 1;
+  margin-left: auto;
+}
+
+.section-chevron.open {
+  transform: rotate(90deg);
+}
+
+.section-content {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: pre-wrap;
+  padding: 4px 8px 6px 30px;
+  line-height: 1.5;
+}
+
 /* ── Controls ── */
 .controls {
   display: flex;
