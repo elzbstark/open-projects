@@ -109,15 +109,32 @@ function render(state) {
   btnPlayPause.textContent = isRunning ? '⏸' : '▶';
 }
 
+// Track which sections are expanded in the extension panel
+const expandedSections = new Set();
+
+// Keep last-known render args so expand/collapse can re-render without a new state push
+let lastSections = [];
+let lastSectionElapsed = [];
+let lastActiveIndex = 0;
+
 function renderSectionList(sections, sectionElapsed, activeIndex) {
+  lastSections = sections;
+  lastSectionElapsed = sectionElapsed;
+  lastActiveIndex = activeIndex;
+
   elSectionList.innerHTML = '';
   sections.forEach((sec, i) => {
     const elapsed = sectionElapsed[i] || 0;
     const status  = i < activeIndex ? 'completed' : i === activeIndex ? 'active' : 'upcoming';
     const pStatus = getPaceStatus(elapsed, sec.durationSeconds);
+    const isExpanded = expandedSections.has(i);
+
+    // Wrapper includes row + optional content
+    const wrapper = document.createElement('div');
+    wrapper.className = 'section-wrapper';
 
     const row = document.createElement('div');
-    row.className = `section-row ${status}`;
+    row.className = `section-row ${status}${isExpanded ? ' expanded' : ''}`;
 
     const check = document.createElement('span');
     check.className = 'section-check';
@@ -143,7 +160,38 @@ function renderSectionList(sections, sectionElapsed, activeIndex) {
       row.appendChild(elapsedEl);
     }
 
-    elSectionList.appendChild(row);
+    // Chevron — always shown if section has content
+    if (sec.content) {
+      const chevron = document.createElement('span');
+      chevron.className = `section-chevron${isExpanded ? ' open' : ''}`;
+      chevron.textContent = '›';
+      row.appendChild(chevron);
+    }
+
+    // Click row to toggle expand (only if there's content)
+    if (sec.content) {
+      row.style.cursor = 'pointer';
+      row.addEventListener('click', () => {
+        if (expandedSections.has(i)) {
+          expandedSections.delete(i);
+        } else {
+          expandedSections.add(i);
+        }
+        renderSectionList(lastSections, lastSectionElapsed, lastActiveIndex);
+      });
+    }
+
+    wrapper.appendChild(row);
+
+    // Expanded content
+    if (sec.content && isExpanded) {
+      const contentEl = document.createElement('div');
+      contentEl.className = 'section-content';
+      contentEl.textContent = sec.content;
+      wrapper.appendChild(contentEl);
+    }
+
+    elSectionList.appendChild(wrapper);
   });
 }
 

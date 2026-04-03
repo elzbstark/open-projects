@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import type { Session, SessionSection, PaceStatus } from '../../types';
 import { useTimer } from '../../hooks/useTimer';
 import { useKeyboardShortcuts } from '../../hooks/useKeyboardShortcuts';
-import { TotalProgressBar } from './TotalProgressBar';
 import { SectionTimerBar } from './SectionTimerBar';
 import { Controls } from './Controls';
 import { MarkdownRenderer } from '../shared/MarkdownRenderer';
@@ -10,7 +9,7 @@ import { formatTime } from '../shared/TimeDisplay';
 
 interface ImprovLiveProps {
   session: Session;
-  onExit: (updatedSections?: SessionSection[]) => void;
+  onExit: (updatedSections?: SessionSection[], completedAt?: string) => void;
 }
 
 export function ImprovLive({ session, onExit }: ImprovLiveProps) {
@@ -41,6 +40,7 @@ export function ImprovLive({ session, onExit }: ImprovLiveProps) {
       sections: session.sections.map((s) => ({
         name: s.name,
         durationSeconds: s.durationSeconds,
+        content: s.content || '',
       })),
       totalBudget,
       updatedAt: Date.now(),
@@ -89,6 +89,14 @@ export function ImprovLive({ session, onExit }: ImprovLiveProps) {
     onExit(updatedSections);
   }, [session.sections, sectionNotes, onExit]);
 
+  const handleComplete = useCallback(() => {
+    const updatedSections = session.sections.map((s, i) => ({
+      ...s,
+      notes: sectionNotes[i] || '',
+    }));
+    onExit(updatedSections, new Date().toISOString());
+  }, [session.sections, sectionNotes, onExit]);
+
   useKeyboardShortcuts({
     onTogglePause: togglePause,
     onNextSection: nextSection,
@@ -124,14 +132,6 @@ export function ImprovLive({ session, onExit }: ImprovLiveProps) {
           Space: pause | →: next | ←: prev | Esc: exit
         </span>
       </div>
-
-      {/* Total progress */}
-      <TotalProgressBar
-        companyName={session.companyName}
-        templateName={session.templateName}
-        totalElapsed={timer.totalElapsed}
-        totalBudget={totalBudget}
-      />
 
       {/* Main content — centered, max readable width */}
       <div className="flex-1 overflow-y-auto">
@@ -205,6 +205,15 @@ export function ImprovLive({ session, onExit }: ImprovLiveProps) {
               {i < timer.activeSectionIndex ? '✓ ' : ''}{sec.name}
             </button>
           ))}
+        </div>
+
+        <div className="flex items-center justify-between px-6 pb-2">
+          <button
+            onClick={handleComplete}
+            className="px-4 py-1.5 text-sm border border-green-600 text-green-400 hover:bg-green-900/30 rounded transition-colors"
+          >
+            ✓ Interview Complete
+          </button>
         </div>
 
         <Controls
