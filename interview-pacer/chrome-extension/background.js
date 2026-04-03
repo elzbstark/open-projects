@@ -50,13 +50,36 @@ async function readAppState() {
     const appTab = tabs.find((t) => t.url && t.url.includes(APP_URL));
     if (!appTab?.id) return null;
 
+    // Run inside the app tab: read state and, if the timer is running,
+    // advance elapsed and bump updatedAt based on wall-clock time.
+    // This keeps the sidepanel alive even when Chrome throttles or freezes
+    // the app tab's own setInterval.
     const results = await chrome.scripting.executeScript({
       target: { tabId: appTab.id },
-      func: () => localStorage.getItem('interview-pacer-live-state'),
+      func: () => {
+        const raw = localStorage.getItem('interview-pacer-live-state');
+        if (!raw) return null;
+        try {
+          const state = JSON.parse(raw);
+          if (state?.isRunning) {
+            const gapSec = (Date.now() - state.updatedAt) / 1000;
+            if (gapSec > 0.5) {
+              state.sectionElapsed = state.sectionElapsed.map((e, i) =>
+                i === state.activeSectionIndex ? e + gapSec : e
+              );
+              state.totalElapsed = (state.totalElapsed || 0) + gapSec;
+              state.updatedAt = Date.now();
+              localStorage.setItem('interview-pacer-live-state', JSON.stringify(state));
+            }
+          }
+          return state;
+        } catch {
+          return null;
+        }
+      },
     });
 
-    const raw = results?.[0]?.result;
-    return raw ? JSON.parse(raw) : null;
+    return results?.[0]?.result ?? null;
   } catch {
     return null;
   }
