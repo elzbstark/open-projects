@@ -6,7 +6,6 @@ import { TemplateList } from './TemplateList';
 import { TemplateEditor } from './TemplateEditor';
 import { SessionList } from './SessionList';
 import { SessionEditor } from './SessionEditor';
-import { formatTime } from '../shared/TimeDisplay';
 
 interface PrepLayoutProps {
   onLaunchSession: (session: Session) => void;
@@ -15,15 +14,11 @@ interface PrepLayoutProps {
 export function PrepLayout({ onLaunchSession }: PrepLayoutProps) {
   const { templates, setTemplates, sessions, setSessions } = useAppState();
 
-  const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(null);
   const [editingTemplate, setEditingTemplate] = useState<Template | null>(null);
-  const [previewingTemplateId, setPreviewingTemplateId] = useState<string | null>(null);
   const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
   const [showNewSession, setShowNewSession] = useState(false);
 
-  const selectedTemplate = templates.find((t) => t.id === selectedTemplateId) || null;
   const selectedSession = sessions.find((s) => s.id === selectedSessionId) || null;
-  const previewingTemplate = templates.find((t) => t.id === previewingTemplateId) || null;
 
   function handleSaveTemplate(updated: Template) {
     const newTemplates = templates.map((t) => (t.id === updated.id ? updated : t));
@@ -39,7 +34,6 @@ export function PrepLayout({ onLaunchSession }: PrepLayoutProps) {
     const newTemplates = templates.filter((t) => t.id !== id);
     setTemplates(newTemplates);
     saveTemplates(newTemplates);
-    if (selectedTemplateId === id) setSelectedTemplateId(null);
   }
 
   function handleNewTemplate() {
@@ -121,12 +115,8 @@ export function PrepLayout({ onLaunchSession }: PrepLayoutProps) {
             ) : (
               <TemplateList
                 templates={templates}
-                selectedId={selectedTemplateId}
+                selectedId={null}
                 onSelect={(id) => {
-                  setSelectedTemplateId(id);
-                  setPreviewingTemplateId(id);
-                  setSelectedSessionId(null);
-                  setShowNewSession(false);
                   const t = templates.find((t) => t.id === id);
                   if (t && !t.isDefault) setEditingTemplate(t);
                 }}
@@ -196,22 +186,15 @@ export function PrepLayout({ onLaunchSession }: PrepLayoutProps) {
             )}
           </div>
 
-          {/* Right column: Session editor or template preview */}
+          {/* Right column: Session editor */}
           <div>
-            {!showNewSession && !selectedSession && previewingTemplate ? (
-              <TemplatePreview
-                template={previewingTemplate}
-                onEdit={!previewingTemplate.isDefault ? () => setEditingTemplate(previewingTemplate) : undefined}
-              />
-            ) : (
-              <SessionEditor
-                session={showNewSession ? null : selectedSession}
-                template={selectedTemplate}
-                onSave={handleSaveSession}
-                onCreate={handleCreateSession}
-                templates={templates}
-              />
-            )}
+            <SessionEditor
+              session={showNewSession ? null : selectedSession}
+              template={null}
+              onSave={handleSaveSession}
+              onCreate={handleCreateSession}
+              templates={templates}
+            />
           </div>
         </div>
       </div>
@@ -219,37 +202,3 @@ export function PrepLayout({ onLaunchSession }: PrepLayoutProps) {
   );
 }
 
-function TemplatePreview({ template, onEdit }: { template: Template; onEdit?: () => void }) {
-  const totalDuration = template.sections.reduce((s, sec) => s + sec.durationSeconds, 0);
-  return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h3 className="text-lg font-semibold text-white">{template.name}</h3>
-          <p className="text-xs text-gray-500 mt-0.5">
-            {template.sections.length} sections · {formatTime(totalDuration)} total
-          </p>
-        </div>
-        {onEdit && (
-          <button
-            onClick={onEdit}
-            className="px-3 py-1 text-sm bg-gray-700 hover:bg-gray-600 text-white rounded transition-colors"
-          >
-            Edit
-          </button>
-        )}
-      </div>
-      <div className="space-y-1.5">
-        {template.sections.map((sec, i) => (
-          <div key={sec.id} className="flex items-center justify-between px-3 py-2 bg-gray-800 rounded border border-gray-700">
-            <span className="text-sm text-gray-300">
-              <span className="text-gray-500 mr-2">{i + 1}.</span>
-              {sec.name}
-            </span>
-            <span className="text-xs text-gray-500 font-mono">{formatTime(sec.durationSeconds)}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
