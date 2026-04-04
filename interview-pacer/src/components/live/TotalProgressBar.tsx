@@ -2,14 +2,14 @@ import { formatTime } from '../shared/TimeDisplay';
 
 interface TotalProgressBarProps {
   companyName: string;
-  templateName: string;
+  sessionName: string;
   totalElapsed: number;
   totalBudget: number;
 }
 
 export function TotalProgressBar({
   companyName,
-  templateName,
+  sessionName,
   totalElapsed,
   totalBudget,
 }: TotalProgressBarProps) {
@@ -20,7 +20,7 @@ export function TotalProgressBar({
     <div className="px-4 py-3 border-b border-gray-700">
       <div className="flex justify-between items-baseline mb-2">
         <span className="font-semibold text-white text-sm">
-          {companyName}: {templateName}
+          {companyName}: {sessionName}
         </span>
       </div>
       <div className="flex items-center gap-3">

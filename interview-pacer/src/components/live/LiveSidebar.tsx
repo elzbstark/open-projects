@@ -129,7 +129,7 @@ export function LiveSidebar({ session, onExit }: LiveSidebarProps) {
       {/* Total progress */}
       <TotalProgressBar
         companyName={session.companyName}
-        templateName={session.templateName}
+        sessionName={session.name}
         totalElapsed={timer.totalElapsed}
         totalBudget={totalBudget}
       />

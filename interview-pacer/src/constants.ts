@@ -17,7 +17,7 @@ export const DEFAULT_TEMPLATES: Template[] = [
       sec('b30-followup',  'Follow-up',     4),
       sec('b30-why',       'Why Company',   3),
       sec('b30-questions', 'Questions',     5),
-      sec('b30-buffer',    'Buffer',        2),
+      sec('b30-buffer',    'Buffer',        6),
     ],
   },
   {
@@ -32,7 +32,7 @@ export const DEFAULT_TEMPLATES: Template[] = [
       sec('cs45-rec',      'Recommendation', 5),
       sec('cs45-deepdive', 'Deep Dive',      8),
       sec('cs45-questions','Questions',      5),
-      sec('cs45-buffer',   'Buffer',         4),
+      sec('cs45-buffer',   'Buffer',         9),
     ],
   },
   {

@@ -197,7 +197,7 @@ export function SessionEditor({ session, onSave, onCreate, templates }: SessionE
       <div className="space-y-4">
         {session.sections.map((section, i) => (
           <div key={section.id} className="space-y-1">
-            <label className="text-xs text-gray-400 flex items-center gap-2">
+            <label className="sticky top-0 z-10 bg-gray-900 py-1 border-b border-gray-700/50 text-xs text-gray-400 flex items-center gap-2">
               <span className="font-medium text-gray-300">{section.name}</span>
               <span>({Math.round(section.durationSeconds / 60)}m)</span>
             </label>
