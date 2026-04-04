@@ -7,11 +7,10 @@ interface SessionEditorProps {
   template: Template | null;
   onSave: (session: Session) => void;
   onCreate: (templateId: string, companyName: string, name: string, sessionType: 'delivery' | 'improv') => void;
-  onLaunch: (session: Session) => void;
   templates: Template[];
 }
 
-export function SessionEditor({ session, onSave, onCreate, onLaunch, templates }: SessionEditorProps) {
+export function SessionEditor({ session, onSave, onCreate, templates }: SessionEditorProps) {
   const [companyName, setCompanyName] = useState('');
   const [sessionName, setSessionName] = useState('');
   const [selectedTemplateId, setSelectedTemplateId] = useState(templates[0]?.id || '');
@@ -117,21 +116,13 @@ export function SessionEditor({ session, onSave, onCreate, onLaunch, templates }
   // Edit existing session
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-lg font-semibold text-white">
-            {session.companyName}: {session.name}
-          </h2>
-          <p className="text-xs text-gray-500 mt-0.5">
-            {[session.templateName, isImprov ? 'Improv' : null].filter(Boolean).join(' · ')}
-          </p>
-        </div>
-        <button
-          onClick={() => onLaunch(session)}
-          className="px-3 py-1.5 text-sm bg-green-700 hover:bg-green-600 text-white rounded transition-colors shrink-0"
-        >
-          ▶ Go Live
-        </button>
+      <div>
+        <h2 className="text-lg font-semibold text-white">
+          {session.companyName}: {session.name}
+        </h2>
+        <p className="text-xs text-gray-500 mt-0.5">
+          {[session.templateName, isImprov ? 'Improv' : null].filter(Boolean).join(' · ')}
+        </p>
       </div>
 
       {/* Bulk paste / file load toggle */}

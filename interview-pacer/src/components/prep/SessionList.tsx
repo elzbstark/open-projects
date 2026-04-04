@@ -4,11 +4,12 @@ interface SessionListProps {
   sessions: Session[];
   selectedId: string | null;
   onSelect: (id: string) => void;
+  onLaunch: (id: string) => void;
   onDelete: (id: string) => void;
   onMarkDone: (id: string) => void;
 }
 
-export function SessionList({ sessions, selectedId, onSelect, onDelete, onMarkDone }: SessionListProps) {
+export function SessionList({ sessions, selectedId, onSelect, onLaunch, onDelete, onMarkDone }: SessionListProps) {
   if (sessions.length === 0) {
     return (
       <div className="text-sm text-gray-500 italic">
@@ -60,7 +61,7 @@ export function SessionList({ sessions, selectedId, onSelect, onDelete, onMarkDo
                 <span className="text-xs px-1.5 py-0.5 text-gray-500 bg-gray-800 rounded">Ready</span>
               )}
               <button
-                onClick={(e) => { e.stopPropagation(); onSelect(s.id); }}
+                onClick={(e) => { e.stopPropagation(); onLaunch(s.id); }}
                 className="px-2 py-1 text-xs bg-gray-700 hover:bg-gray-600 text-gray-200 rounded transition-colors"
               >
                 Open

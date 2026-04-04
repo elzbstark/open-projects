@@ -155,6 +155,10 @@ export function PrepLayout({ onLaunchSession }: PrepLayoutProps) {
                   setSelectedSessionId(id);
                   setShowNewSession(false);
                 }}
+                onLaunch={(id) => {
+                  const s = sessions.find((s) => s.id === id);
+                  if (s) onLaunchSession(s);
+                }}
                 onDelete={handleDeleteSession}
                 onMarkDone={handleMarkDone}
               />
@@ -200,7 +204,6 @@ export function PrepLayout({ onLaunchSession }: PrepLayoutProps) {
               template={null}
               onSave={handleSaveSession}
               onCreate={handleCreateSession}
-              onLaunch={onLaunchSession}
               templates={templates}
             />
           </div>
