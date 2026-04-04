@@ -31,6 +31,10 @@ export function SessionList({ sessions, selectedId, onSelect, onLaunch, onDelete
     <div className="space-y-1">
       {sorted.map((s) => {
         const isActive = !!s.startedAt;
+        const subtitle = [s.templateName, s.sessionType === 'improv' ? 'Improv' : null]
+          .filter(Boolean)
+          .join(' · ');
+
         return (
           <div
             key={s.id}
@@ -42,33 +46,25 @@ export function SessionList({ sessions, selectedId, onSelect, onLaunch, onDelete
             }`}
           >
             <div className="min-w-0">
-              <div className="flex items-center gap-1.5">
-                <span className="text-sm text-white truncate">{s.companyName}: {s.name}</span>
-                {s.sessionType === 'improv' && (
-                  <span className="text-xs px-1.5 py-0.5 bg-purple-900/60 text-purple-300 rounded shrink-0">Improv</span>
-                )}
-                {isActive ? (
-                  <span className="text-xs px-1.5 py-0.5 bg-blue-900/60 text-blue-300 rounded shrink-0">Active</span>
-                ) : (
-                  <span className="text-xs px-1.5 py-0.5 bg-gray-700/80 text-gray-400 rounded shrink-0">Ready</span>
-                )}
-              </div>
-              <span className="text-xs text-gray-500">{s.templateName}</span>
+              <span className="text-sm text-white truncate block">{s.companyName}: {s.name}</span>
+              <span className="text-xs text-gray-500">{subtitle}</span>
             </div>
-            <div className="flex gap-1 shrink-0 ml-2">
-              {isActive && (
+            <div className="flex items-center gap-1.5 shrink-0 ml-2">
+              {isActive ? (
                 <button
                   onClick={(e) => { e.stopPropagation(); onMarkDone(s.id); }}
                   className="px-2 py-1 text-xs border border-green-800 text-green-500 hover:bg-green-900/30 rounded transition-colors"
                 >
                   ✓ Done
                 </button>
+              ) : (
+                <span className="text-xs px-1.5 py-0.5 text-gray-500 bg-gray-800 rounded">Ready</span>
               )}
               <button
                 onClick={(e) => { e.stopPropagation(); onLaunch(s.id); }}
                 className="px-2 py-1 text-xs bg-green-700 hover:bg-green-600 text-white rounded transition-colors"
               >
-                ▶ Live
+                ▶ Start
               </button>
               <button
                 onClick={(e) => { e.stopPropagation(); onDelete(s.id); }}

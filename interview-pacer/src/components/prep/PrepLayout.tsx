@@ -164,23 +164,24 @@ export function PrepLayout({ onLaunchSession }: PrepLayoutProps) {
               />
             </div>
 
-            {/* Completed sessions */}
+            {/* Completed sessions — visually separated as history */}
             {sessions.some((s) => s.completedAt) && (
-              <div>
-                <h2 className="text-lg font-semibold text-white mb-3">Completed</h2>
+              <div className="pt-4 border-t border-gray-700/50">
+                <h2 className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-3">Completed</h2>
                 <div className="space-y-1">
-                  {sessions.filter((s) => s.completedAt).map((s) => (
+                  {[...sessions.filter((s) => s.completedAt)].sort(
+                    (a, b) => new Date(b.completedAt!).getTime() - new Date(a.completedAt!).getTime()
+                  ).map((s) => (
                     <div
                       key={s.id}
-                      className="flex items-center justify-between px-3 py-2 rounded border border-transparent hover:bg-gray-800 transition-colors"
+                      className="flex items-center justify-between px-3 py-2 rounded border border-transparent hover:bg-gray-800/50 transition-colors"
                     >
                       <div className="min-w-0">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-sm text-gray-400 truncate">{s.companyName}: {s.name}</span>
-                          <span className="text-xs px-1.5 py-0.5 bg-gray-700 text-gray-500 rounded shrink-0">Done</span>
-                        </div>
+                        <span className="text-sm text-gray-500 truncate block">{s.companyName}: {s.name}</span>
                         <span className="text-xs text-gray-600">
-                          {new Date(s.completedAt!).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                          {[s.templateName, s.sessionType === 'improv' ? 'Improv' : null].filter(Boolean).join(' · ')}
+                          {' · '}
+                          {new Date(s.completedAt!).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                         </span>
                       </div>
                       <button
