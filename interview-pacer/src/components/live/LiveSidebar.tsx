@@ -130,7 +130,7 @@ export function LiveSidebar({ session, onExit }: LiveSidebarProps) {
           onClick={() => onExit(new Date().toISOString())}
           className="px-3 py-1 text-xs border border-green-700 text-green-400 hover:bg-green-900/30 rounded transition-colors shrink-0"
         >
-          ✓ Done
+          Mark complete
         </button>
       </div>
 

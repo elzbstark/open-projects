@@ -4,12 +4,11 @@ interface SessionListProps {
   sessions: Session[];
   selectedId: string | null;
   onSelect: (id: string) => void;
-  onLaunch: (id: string) => void;
   onDelete: (id: string) => void;
   onMarkDone: (id: string) => void;
 }
 
-export function SessionList({ sessions, selectedId, onSelect, onLaunch, onDelete, onMarkDone }: SessionListProps) {
+export function SessionList({ sessions, selectedId, onSelect, onDelete, onMarkDone }: SessionListProps) {
   if (sessions.length === 0) {
     return (
       <div className="text-sm text-gray-500 italic">
@@ -53,18 +52,18 @@ export function SessionList({ sessions, selectedId, onSelect, onLaunch, onDelete
               {isActive ? (
                 <button
                   onClick={(e) => { e.stopPropagation(); onMarkDone(s.id); }}
-                  className="px-2 py-1 text-xs border border-green-800 text-green-500 hover:bg-green-900/30 rounded transition-colors"
+                  className="px-2 py-1 text-xs border border-gray-600 text-gray-400 hover:border-green-700 hover:text-green-400 rounded transition-colors"
                 >
-                  ✓ Done
+                  Mark complete
                 </button>
               ) : (
                 <span className="text-xs px-1.5 py-0.5 text-gray-500 bg-gray-800 rounded">Ready</span>
               )}
               <button
-                onClick={(e) => { e.stopPropagation(); onLaunch(s.id); }}
-                className="px-2 py-1 text-xs bg-green-700 hover:bg-green-600 text-white rounded transition-colors"
+                onClick={(e) => { e.stopPropagation(); onSelect(s.id); }}
+                className="px-2 py-1 text-xs bg-gray-700 hover:bg-gray-600 text-gray-200 rounded transition-colors"
               >
-                ▶ Start
+                Open
               </button>
               <button
                 onClick={(e) => { e.stopPropagation(); onDelete(s.id); }}

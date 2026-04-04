@@ -7,10 +7,11 @@ interface SessionEditorProps {
   template: Template | null;
   onSave: (session: Session) => void;
   onCreate: (templateId: string, companyName: string, name: string, sessionType: 'delivery' | 'improv') => void;
+  onLaunch: (session: Session) => void;
   templates: Template[];
 }
 
-export function SessionEditor({ session, onSave, onCreate, templates }: SessionEditorProps) {
+export function SessionEditor({ session, onSave, onCreate, onLaunch, templates }: SessionEditorProps) {
   const [companyName, setCompanyName] = useState('');
   const [sessionName, setSessionName] = useState('');
   const [selectedTemplateId, setSelectedTemplateId] = useState(templates[0]?.id || '');
@@ -117,17 +118,20 @@ export function SessionEditor({ session, onSave, onCreate, templates }: SessionE
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-white">
-          {session.companyName} — {session.name}
-        </h2>
-        <div className="flex items-center gap-2">
-          {isImprov && (
-            <span className="text-xs px-2 py-0.5 bg-purple-900/50 text-purple-300 rounded-full border border-purple-800/50">
-              Improv
-            </span>
-          )}
-          <span className="text-xs text-gray-500">{session.templateName}</span>
+        <div>
+          <h2 className="text-lg font-semibold text-white">
+            {session.companyName}: {session.name}
+          </h2>
+          <p className="text-xs text-gray-500 mt-0.5">
+            {[session.templateName, isImprov ? 'Improv' : null].filter(Boolean).join(' · ')}
+          </p>
         </div>
+        <button
+          onClick={() => onLaunch(session)}
+          className="px-3 py-1.5 text-sm bg-green-700 hover:bg-green-600 text-white rounded transition-colors shrink-0"
+        >
+          ▶ Go Live
+        </button>
       </div>
 
       {/* Bulk paste / file load toggle */}

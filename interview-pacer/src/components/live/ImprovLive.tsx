@@ -120,17 +120,25 @@ export function ImprovLive({ session, onExit }: ImprovLiveProps) {
 
   return (
     <div className="w-full h-screen flex flex-col bg-gray-900 text-gray-200 font-sans">
-      {/* Header: back button + keyboard hint */}
-      <div className="flex items-center px-4 py-2 border-b border-gray-700">
+      {/* Header: back button + keyboard hint + mark complete */}
+      <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleExit}
+            className="text-gray-400 hover:text-white text-sm transition-colors"
+          >
+            ← Back
+          </button>
+          <span className="text-xs text-gray-600">
+            Space: pause | →: next | ←: prev | Esc: exit
+          </span>
+        </div>
         <button
-          onClick={handleExit}
-          className="text-gray-400 hover:text-white text-sm mr-4 transition-colors"
+          onClick={handleComplete}
+          className="px-3 py-1 text-xs border border-green-700 text-green-400 hover:bg-green-900/30 rounded transition-colors shrink-0"
         >
-          ← Back
+          Mark complete
         </button>
-        <span className="text-xs text-gray-600">
-          Space: pause | →: next | ←: prev | Esc: exit
-        </span>
       </div>
 
       {/* Main content — centered, max readable width */}
@@ -205,15 +213,6 @@ export function ImprovLive({ session, onExit }: ImprovLiveProps) {
               {i < timer.activeSectionIndex ? '✓ ' : ''}{sec.name}
             </button>
           ))}
-        </div>
-
-        <div className="flex items-center justify-between px-6 pb-2">
-          <button
-            onClick={handleComplete}
-            className="px-4 py-1.5 text-sm border border-green-600 text-green-400 hover:bg-green-900/30 rounded transition-colors"
-          >
-            ✓ Interview Complete
-          </button>
         </div>
 
         <Controls
