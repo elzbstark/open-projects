@@ -91,6 +91,15 @@ export function PrepLayout({ onLaunchSession }: PrepLayoutProps) {
     if (selectedSessionId === id) setSelectedSessionId(null);
   }
 
+  function handleMarkDone(id: string) {
+    const newSessions = sessions.map((s) =>
+      s.id === id ? { ...s, completedAt: new Date().toISOString() } : s
+    );
+    setSessions(newSessions);
+    saveSessions(newSessions);
+    if (selectedSessionId === id) setSelectedSessionId(null);
+  }
+
   return (
     <div className="min-h-screen bg-gray-900 text-gray-200">
       <div className="max-w-5xl mx-auto p-6">
@@ -151,6 +160,7 @@ export function PrepLayout({ onLaunchSession }: PrepLayoutProps) {
                   if (s) onLaunchSession(s);
                 }}
                 onDelete={handleDeleteSession}
+                onMarkDone={handleMarkDone}
               />
             </div>
 

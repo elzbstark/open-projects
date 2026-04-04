@@ -30,6 +30,7 @@ export interface Session {
   sections: SessionSection[];
   createdAt: string;
   updatedAt: string;
+  startedAt?: string;
   completedAt?: string;
   sessionType?: 'delivery' | 'improv';
 }

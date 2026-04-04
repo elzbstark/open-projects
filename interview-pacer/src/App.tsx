@@ -14,7 +14,19 @@ export default function App() {
 
   function setTemplates(t: typeof templates) { setTemplatesState(t); saveTemplates(t); }
   function setSessions(s: typeof sessions) { setSessionsState(s); saveSessions(s); }
-  function handleLaunchSession(session: Session) { setLiveSession(session); setMode('live'); }
+  function handleLaunchSession(session: Session) {
+    // Set startedAt on first launch — this is what transitions Ready → Active
+    if (!session.startedAt) {
+      const updated = { ...session, startedAt: new Date().toISOString() };
+      const newSessions = sessions.map((s) => (s.id === updated.id ? updated : s));
+      setSessionsState(newSessions);
+      saveSessions(newSessions);
+      setLiveSession(updated);
+    } else {
+      setLiveSession(session);
+    }
+    setMode('live');
+  }
 
   function handleExitLive(updatedSections?: SessionSection[], completedAt?: string) {
     if (updatedSections && liveSession) {
@@ -47,7 +59,7 @@ export default function App() {
         (liveSession.sessionType ?? 'delivery') === 'improv' ? (
           <ImprovLive session={liveSession} onExit={handleExitLive} />
         ) : (
-          <LiveSidebar session={liveSession} onExit={() => handleExitLive()} />
+          <LiveSidebar session={liveSession} onExit={(completedAt) => handleExitLive(undefined, completedAt)} />
         )
       ) : (
         <PrepLayout onLaunchSession={handleLaunchSession} />

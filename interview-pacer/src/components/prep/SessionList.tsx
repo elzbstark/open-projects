@@ -6,9 +6,10 @@ interface SessionListProps {
   onSelect: (id: string) => void;
   onLaunch: (id: string) => void;
   onDelete: (id: string) => void;
+  onMarkDone: (id: string) => void;
 }
 
-export function SessionList({ sessions, selectedId, onSelect, onLaunch, onDelete }: SessionListProps) {
+export function SessionList({ sessions, selectedId, onSelect, onLaunch, onDelete, onMarkDone }: SessionListProps) {
   if (sessions.length === 0) {
     return (
       <div className="text-sm text-gray-500 italic">
@@ -17,49 +18,68 @@ export function SessionList({ sessions, selectedId, onSelect, onLaunch, onDelete
     );
   }
 
+  // Active (has startedAt) sorted by startedAt desc, then Ready (no startedAt) by createdAt desc
+  const active = [...sessions.filter((s) => s.startedAt)].sort(
+    (a, b) => new Date(b.startedAt!).getTime() - new Date(a.startedAt!).getTime()
+  );
+  const ready = [...sessions.filter((s) => !s.startedAt)].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
+  const sorted = [...active, ...ready];
+
   return (
     <div className="space-y-1">
-      {sessions.map((s) => (
-        <div
-          key={s.id}
-          onClick={() => onSelect(s.id)}
-          className={`flex items-center justify-between px-3 py-2 rounded cursor-pointer transition-colors ${
-            selectedId === s.id
-              ? 'bg-blue-900/40 border border-blue-700/50'
-              : 'hover:bg-gray-800 border border-transparent'
-          }`}
-        >
-          <div className="min-w-0">
-            <div className="flex items-center gap-1.5">
-              <span className="text-sm text-white truncate">{s.companyName}: {s.name}</span>
-              {s.sessionType === 'improv' && (
-                <span className="text-xs px-1.5 py-0.5 bg-purple-900/60 text-purple-300 rounded shrink-0">Improv</span>
-              )}
+      {sorted.map((s) => {
+        const isActive = !!s.startedAt;
+        return (
+          <div
+            key={s.id}
+            onClick={() => onSelect(s.id)}
+            className={`flex items-center justify-between px-3 py-2 rounded cursor-pointer transition-colors ${
+              selectedId === s.id
+                ? 'bg-blue-900/40 border border-blue-700/50'
+                : 'hover:bg-gray-800 border border-transparent'
+            }`}
+          >
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5">
+                <span className="text-sm text-white truncate">{s.companyName}: {s.name}</span>
+                {s.sessionType === 'improv' && (
+                  <span className="text-xs px-1.5 py-0.5 bg-purple-900/60 text-purple-300 rounded shrink-0">Improv</span>
+                )}
+                {isActive ? (
+                  <span className="text-xs px-1.5 py-0.5 bg-blue-900/60 text-blue-300 rounded shrink-0">Active</span>
+                ) : (
+                  <span className="text-xs px-1.5 py-0.5 bg-gray-700/80 text-gray-400 rounded shrink-0">Ready</span>
+                )}
+              </div>
+              <span className="text-xs text-gray-500">{s.templateName}</span>
             </div>
-            <span className="text-xs text-gray-500">{s.templateName}</span>
+            <div className="flex gap-1 shrink-0 ml-2">
+              {isActive && (
+                <button
+                  onClick={(e) => { e.stopPropagation(); onMarkDone(s.id); }}
+                  className="px-2 py-1 text-xs border border-green-800 text-green-500 hover:bg-green-900/30 rounded transition-colors"
+                >
+                  ✓ Done
+                </button>
+              )}
+              <button
+                onClick={(e) => { e.stopPropagation(); onLaunch(s.id); }}
+                className="px-2 py-1 text-xs bg-green-700 hover:bg-green-600 text-white rounded transition-colors"
+              >
+                ▶ Live
+              </button>
+              <button
+                onClick={(e) => { e.stopPropagation(); onDelete(s.id); }}
+                className="text-gray-500 hover:text-red-400 text-xs px-1 transition-colors"
+              >
+                ✕
+              </button>
+            </div>
           </div>
-          <div className="flex gap-1 shrink-0 ml-2">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onLaunch(s.id);
-              }}
-              className="px-2 py-1 text-xs bg-green-700 hover:bg-green-600 text-white rounded transition-colors"
-            >
-              ▶ Live
-            </button>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onDelete(s.id);
-              }}
-              className="text-gray-500 hover:text-red-400 text-xs px-1 transition-colors"
-            >
-              ✕
-            </button>
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

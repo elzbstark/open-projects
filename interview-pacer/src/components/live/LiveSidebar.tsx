@@ -8,7 +8,7 @@ import { Controls } from './Controls';
 
 interface LiveSidebarProps {
   session: Session;
-  onExit: () => void;
+  onExit: (completedAt?: string) => void;
 }
 
 export function LiveSidebar({ session, onExit }: LiveSidebarProps) {
@@ -114,16 +114,24 @@ export function LiveSidebar({ session, onExit }: LiveSidebarProps) {
   return (
     <div className="w-[400px] h-screen flex flex-col bg-gray-900 text-gray-200 font-sans">
       {/* Header bar with back button */}
-      <div className="flex items-center px-4 py-2 border-b border-gray-700">
+      <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => onExit()}
+            className="text-gray-400 hover:text-white text-sm transition-colors"
+          >
+            ← Back
+          </button>
+          <span className="text-xs text-gray-500">
+            Space: pause | →: next | ←: prev | Esc: collapse
+          </span>
+        </div>
         <button
-          onClick={onExit}
-          className="text-gray-400 hover:text-white text-sm mr-3 transition-colors"
+          onClick={() => onExit(new Date().toISOString())}
+          className="px-3 py-1 text-xs border border-green-700 text-green-400 hover:bg-green-900/30 rounded transition-colors shrink-0"
         >
-          ← Back
+          ✓ Done
         </button>
-        <span className="text-xs text-gray-500">
-          Space: pause | →: next | ←: prev | Esc: collapse
-        </span>
       </div>
 
       {/* Total progress */}
