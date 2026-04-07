@@ -1,0 +1,15 @@
+# Private — never commit
+interview-pacer/feedback/
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment files
+.env
+*.env.local
+
+# Logs
+*.log
