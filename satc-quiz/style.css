@@ -1,0 +1,732 @@
+/* ── Fonts ──────────────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Space+Mono:wght@400;700&family=Archivo:wght@400;500&display=swap');
+
+/* ── Reset ──────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Tokens ─────────────────────────────────────────────────────────────────── */
+:root {
+  --paper:    #F1EADA;
+  --paper-dk: #E6DCC3;
+  --ink:      #0A0A0A;
+  --ink-70:   rgba(10,10,10,0.7);
+  --ink-55:   rgba(10,10,10,0.55);
+  --ink-40:   rgba(10,10,10,0.4);
+  --ink-20:   rgba(10,10,10,0.2);
+  --ink-12:   rgba(10,10,10,0.12);
+  --hot:      #FF0F5E;
+  --hot-sh:   rgba(255,15,94,0.14);
+  --gold:     #B8943D;
+}
+
+/* ── Base ───────────────────────────────────────────────────────────────────── */
+html { height: 100%; }
+
+body {
+  min-height: 100%;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Archivo', 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* halftone grain — printed-paper texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23g)'/%3E%3C/svg%3E");
+  opacity: 0.09;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: multiply;
+}
+
+/* faint fuchsia wash from the top */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse 120% 70% at 50% -5%, rgba(255,15,94,0.05) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ── App shell ──────────────────────────────────────────────────────────────── */
+#app {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ── Screens ────────────────────────────────────────────────────────────────── */
+.screen {
+  display: none;
+  width: 100%;
+  flex: 1;
+  flex-direction: column;
+}
+
+.screen.active {
+  display: flex;
+  animation: screenIn 0.5s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+@keyframes screenIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Masthead (magazine header on every screen) ─────────────────────────────── */
+.masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 17px 22px 16px;
+  border-bottom: 1px solid var(--ink);
+  font-family: 'Space Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
+  gap: 10px;
+  position: relative;
+  z-index: 2;
+}
+
+.masthead > span { white-space: nowrap; }
+
+.masthead > span:nth-child(2) {
+  color: var(--hot);
+  flex: 1;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Content container ──────────────────────────────────────────────────────── */
+.inner {
+  max-width: 580px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 56px 26px 72px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Landing ────────────────────────────────────────────────────────────────── */
+#screen-landing .inner { align-items: flex-start; }
+
+.landing-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--hot);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 0.7s ease 0.08s forwards;
+}
+
+.landing-title {
+  font-family: 'Bodoni Moda', serif;
+  font-weight: 900;
+  line-height: 0.82;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 32px;
+  width: 100%;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.18s forwards;
+}
+
+.tt-line {
+  display: block;
+  font-size: clamp(4.4rem, 22vw, 8.4rem);
+}
+
+.tt-line--2 {
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(1.9rem, 9vw, 3.4rem);
+  letter-spacing: 0.005em;
+  padding-left: 0.5em;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.landing-tagline {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding: 14px 0;
+  margin-bottom: 26px;
+  width: 100%;
+  opacity: 0;
+  animation: fadeUp 0.6s ease 0.4s forwards;
+}
+
+.tag-num {
+  font-family: 'Bodoni Moda', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: var(--hot);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.tag-txt {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.landing-body {
+  font-family: 'Bodoni Moda', serif;
+  font-size: 1.08rem;
+  font-weight: 400;
+  color: var(--ink-70);
+  line-height: 1.55;
+  max-width: 460px;
+  margin-bottom: 46px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease 0.5s forwards;
+}
+
+.landing-credits {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  margin-top: auto;
+  padding-top: 44px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease 0.88s forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Progress bar ───────────────────────────────────────────────────────────── */
+.progress-wrap {
+  position: relative;
+  height: 2px;
+  background: var(--ink-12);
+  width: 100%;
+}
+
+.progress-full { background: var(--hot); }
+
+#progress-bar-fill {
+  height: 100%;
+  background: var(--hot);
+  transition: width 0.6s cubic-bezier(0.16,1,0.3,1);
+  width: 0%;
+  position: relative;
+}
+
+#progress-bar-fill::after {
+  content: '';
+  position: absolute;
+  right: -3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 7px;
+  height: 7px;
+  background: var(--hot);
+  box-shadow: 0 0 0 2px var(--paper);
+}
+
+/* ── Quiz screen ────────────────────────────────────────────────────────────── */
+#screen-quiz { position: relative; }
+
+#screen-quiz .inner {
+  padding-top: 44px;
+  position: relative;
+}
+
+.q-hero {
+  position: relative;
+  margin-bottom: 32px;
+}
+
+.q-numeral {
+  position: absolute;
+  top: -48px;
+  right: -14px;
+  font-family: 'Bodoni Moda', serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(9rem, 34vw, 16rem);
+  line-height: 0.82;
+  color: var(--ink);
+  opacity: 0.08;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  letter-spacing: -0.05em;
+}
+
+.q-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--hot);
+  margin-bottom: 22px;
+  position: relative;
+  z-index: 1;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--ink);
+  display: inline-block;
+}
+
+#q-text {
+  font-family: 'Bodoni Moda', serif;
+  font-weight: 700;
+  font-size: clamp(2.2rem, 8.5vw, 3.4rem);
+  line-height: 1.02;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 1;
+  max-width: 540px;
+}
+
+/* ── Options ────────────────────────────────────────────────────────────────── */
+#q-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  position: relative;
+  z-index: 1;
+  margin-top: 6px;
+}
+
+.option-btn {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 20px 6px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--ink-20);
+  cursor: pointer;
+  text-align: left;
+  transition: padding 0.25s cubic-bezier(0.16,1,0.3,1), color 0.2s, background 0.2s;
+  width: 100%;
+  font-family: inherit;
+  position: relative;
+  color: var(--ink);
+}
+
+.option-btn:last-child { border-bottom: none; }
+
+.opt-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--ink-40);
+  width: 46px;
+  flex-shrink: 0;
+  transition: color 0.2s;
+}
+
+.opt-label {
+  font-family: 'Bodoni Moda', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.12;
+  transition: font-style 0.2s;
+  flex: 1;
+}
+
+.opt-arrow {
+  font-family: 'Space Mono', monospace;
+  color: var(--ink-40);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.25s, transform 0.25s, color 0.2s;
+  font-size: 14px;
+  padding-left: 12px;
+}
+
+.option-btn:hover {
+  padding-left: 16px;
+  padding-right: 16px;
+  color: var(--hot);
+}
+
+.option-btn:hover .opt-num,
+.option-btn:hover .opt-arrow { color: var(--hot); }
+
+.option-btn:hover .opt-label { font-style: italic; }
+
+.option-btn:hover .opt-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.option-btn.selected {
+  background: var(--hot);
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.option-btn.selected .opt-num,
+.option-btn.selected .opt-label,
+.option-btn.selected .opt-arrow {
+  color: var(--paper);
+  opacity: 1;
+  font-style: italic;
+}
+
+/* ── Results ────────────────────────────────────────────────────────────────── */
+#screen-results .inner { padding-top: 52px; }
+
+.results-header {
+  text-align: left;
+  margin-bottom: 36px;
+}
+
+.results-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--hot);
+  margin-bottom: 14px;
+}
+
+.results-title {
+  font-family: 'Bodoni Moda', serif;
+  font-weight: 900;
+  font-size: clamp(2.5rem, 9.5vw, 3.8rem);
+  line-height: 0.94;
+  color: var(--ink);
+  letter-spacing: -0.025em;
+}
+
+.results-title em {
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink-55);
+}
+
+#results-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 44px;
+}
+
+/* ── Episode card ───────────────────────────────────────────────────────────── */
+.episode-card {
+  background: transparent;
+  border-top: 1px solid var(--ink);
+  padding: 26px 0 28px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.episode-card:last-child {
+  border-bottom: 1px solid var(--ink);
+}
+
+.card-num {
+  position: absolute;
+  top: 14px;
+  right: -4px;
+  font-family: 'Bodoni Moda', serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(4rem, 14vw, 5.5rem);
+  line-height: 0.85;
+  color: var(--hot);
+  letter-spacing: -0.05em;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.season-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.rating {
+  font-family: 'Space Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+}
+
+.ep-title {
+  font-family: 'Bodoni Moda', serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(1.95rem, 7.4vw, 2.8rem);
+  color: var(--ink);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  margin-bottom: 18px;
+  max-width: 76%;
+  position: relative;
+  z-index: 1;
+}
+
+.ep-desc {
+  font-family: 'Bodoni Moda', serif;
+  font-size: 1.02rem;
+  font-weight: 400;
+  color: var(--ink-70);
+  line-height: 1.55;
+  margin-bottom: 20px;
+  max-width: 540px;
+  position: relative;
+  z-index: 1;
+}
+
+.ep-why {
+  font-family: 'Space Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  line-height: 1.75;
+  padding-top: 16px;
+  border-top: 1px solid var(--ink-20);
+  position: relative;
+  z-index: 1;
+}
+
+.ep-why em {
+  font-style: normal;
+  color: var(--hot);
+}
+
+/* ── Seen-it button ────────────────────────────────────────────────────────── */
+.btn-seen {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 9px 18px;
+  background: transparent;
+  border: 1px solid var(--ink-20);
+  cursor: pointer;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+  position: relative;
+  z-index: 1;
+  align-self: flex-start;
+}
+
+.btn-seen:hover {
+  color: var(--ink);
+  border-color: var(--ink-40);
+}
+
+.seen-check {
+  font-size: 11px;
+  line-height: 1;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.btn-seen.is-watched {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.btn-seen.is-watched .seen-check { opacity: 1; }
+
+.btn-seen.is-watched:hover {
+  background: var(--hot);
+  border-color: var(--hot);
+  color: var(--paper);
+}
+
+/* ── Results actions ────────────────────────────────────────────────────────── */
+.results-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  margin-bottom: 36px;
+}
+
+.quiz-footer {
+  text-align: center;
+  padding-top: 22px;
+  border-top: 1px solid var(--ink-12);
+}
+
+/* ── Buttons ────────────────────────────────────────────────────────────────── */
+.btn-primary {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--ink);
+  border: none;
+  padding: 20px 36px;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background 0.2s, color 0.2s, transform 0.1s;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  opacity: 0;
+  animation: fadeUp 0.7s ease 0.68s forwards;
+}
+
+.btn-primary:hover {
+  background: var(--hot);
+  color: var(--paper);
+}
+
+.btn-primary:active { transform: scale(0.98); }
+
+#screen-results .btn-primary,
+#screen-quiz .btn-primary {
+  opacity: 1;
+  animation: none;
+  width: 100%;
+  justify-content: center;
+  align-self: stretch;
+}
+
+.btn-secondary {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--ink);
+  padding: 17px 32px;
+  cursor: pointer;
+  align-self: stretch;
+  text-align: center;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-secondary:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.btn-ghost {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 6px 10px;
+}
+
+.btn-ghost:hover { color: var(--hot); }
+
+/* ── Toast ──────────────────────────────────────────────────────────────────── */
+#toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(14px);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 14px 26px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  white-space: nowrap;
+  z-index: 100;
+}
+
+#toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── Mobile ─────────────────────────────────────────────────────────────────── */
+@media (max-width: 440px) {
+  .masthead {
+    padding: 14px 16px 13px;
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    gap: 6px;
+  }
+  .inner {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  #screen-landing .inner { padding-top: 44px; padding-bottom: 56px; }
+  #screen-quiz .inner { padding-top: 34px; }
+  #screen-results .inner { padding-top: 38px; }
+  .q-numeral { top: -28px; right: -6px; }
+  .opt-label { font-size: 1.22rem; }
+  .option-btn { padding: 17px 4px; }
+  .card-num { top: 18px; }
+  .ep-title { max-width: 70%; }
+  .tt-line--2 { padding-left: 0.3em; }
+}

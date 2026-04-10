@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What to Watch — Sex and the City</title>
+  <meta name="description" content="Answer 3 questions. Get 2 SATC episodes to watch right now." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- ── Landing ────────────────────────────────────────────────────────────── -->
+  <div id="screen-landing" class="screen active">
+    <header class="masthead">
+      <span>Vol. I &middot; No. 01</span>
+      <span>SATC &mdash; A Rewatch Guide</span>
+      <span>NYC &middot; MCMXCVIII</span>
+    </header>
+    <div class="inner">
+      <p class="landing-eyebrow">&mdash; What to Watch Tonight &mdash;</p>
+      <h1 class="landing-title">
+        <span class="tt-line">Sex</span>
+        <span class="tt-line tt-line--2"><em>and the</em></span>
+        <span class="tt-line">City</span>
+      </h1>
+      <div class="landing-tagline">
+        <span class="tag-num">N&ordm; 01</span>
+        <span class="tag-txt">Three Questions. Two Episodes. Tonight.</span>
+      </div>
+      <p class="landing-body">
+        Stop scrolling. Answer three quick questions and we'll find exactly the right episode for where you are right now.
+      </p>
+      <button id="btn-start" class="btn-primary">
+        <span>Begin the Quiz</span>
+        <span aria-hidden="true">&rarr;</span>
+      </button>
+      <p class="landing-credits">An Editorial Service &middot; Est. 1998 &middot; 94 Episodes</p>
+    </div>
+  </div>
+
+  <!-- ── Quiz ───────────────────────────────────────────────────────────────── -->
+  <div id="screen-quiz" class="screen">
+    <header class="masthead">
+      <span>SATC</span>
+      <span>The Quiz</span>
+      <span id="q-progress">01 / 03</span>
+    </header>
+    <div class="progress-wrap">
+      <div id="progress-bar-fill"></div>
+    </div>
+    <div class="inner">
+      <div class="q-hero">
+        <span class="q-numeral" id="q-numeral">01</span>
+        <p class="q-label">Question No. <span id="q-label-num">01</span></p>
+        <h2 id="q-text"></h2>
+      </div>
+      <div id="q-options"></div>
+    </div>
+  </div>
+
+  <!-- ── Results ────────────────────────────────────────────────────────────── -->
+  <div id="screen-results" class="screen">
+    <header class="masthead">
+      <span>SATC</span>
+      <span>Tonight's Issue</span>
+      <span>Fin. &middot; 03 / 03</span>
+    </header>
+    <div class="progress-wrap progress-full"></div>
+    <div class="inner">
+      <div class="results-header">
+        <p class="results-eyebrow">&mdash; The Picks &mdash;</p>
+        <h2 class="results-title">Your Episodes<br><em>are waiting.</em></h2>
+      </div>
+      <div id="results-cards"></div>
+      <div class="results-actions">
+        <button id="btn-different" class="btn-primary">
+          <span>Show Me Different Ones</span>
+          <span aria-hidden="true">&rarr;</span>
+        </button>
+        <button id="btn-again" class="btn-secondary">Start Over</button>
+      </div>
+      <div class="quiz-footer">
+        <button id="btn-clear-history" class="btn-ghost">Reset recommendation history</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="toast"></div>
+
+<script src="episodes.js"></script>
+<script src="quiz.js"></script>
+</body>
+</html>
