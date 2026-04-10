@@ -21,8 +21,18 @@ Never push to this repo without explicit approval. Always confirm: "Ready to pus
 ## Projects in this repo
 
 - `interview-pacer/` — Vite + TypeScript, deployed to Vercel. `feedback/` folder is local-only, never commit it.
+- `satc-quiz/` — Static HTML/JS/CSS, deployed to satc-rewatch.vercel.app (Vercel root dir: `satc-quiz`). No build step. SATC episode recommender quiz.
 - `morning-brief/` — showcase copy only. The live version runs from the private repo. Update manually when the private version has significant changes worth showing; always diff for personal info before committing.
 - `baby-nutrition-tracker/` — stub/reference only; full app lives in private repo.
+
+## Design preferences
+
+Liz has strong visual taste. Don't default to safe/generic aesthetics.
+
+- **Commit to a real reference point** — a specific magazine, era, or brand — not a vague mood like "elegant" or "modern."
+- **Avoid flowery serifs** (Cormorant Garamond) and generic AI slop (Inter, purple gradients, dark mode + gold accents).
+- **Push past the first idea.** If the design could be any project's landing page, it's not done yet. Ask: would someone screenshot this?
+- **Examples of directions that land:** 1999 Vogue editorial (Bodoni Moda, Space Mono, fuchsia on cream), brutalist, maximalist print — anything with a clear point of view.
 
 ## Vercel deploys
 
