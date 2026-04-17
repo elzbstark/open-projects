@@ -59,7 +59,7 @@ export default function App() {
         (liveSession.sessionType ?? 'delivery') === 'improv' ? (
           <ImprovLive session={liveSession} onExit={handleExitLive} />
         ) : (
-          <LiveSidebar session={liveSession} onExit={(completedAt) => handleExitLive(undefined, completedAt)} />
+          <LiveSidebar session={liveSession} onExit={handleExitLive} />
         )
       ) : (
         <PrepLayout onLaunchSession={handleLaunchSession} />

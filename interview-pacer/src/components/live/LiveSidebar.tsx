@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import type { Session } from '../../types';
+import type { Session, SessionSection } from '../../types';
 import { useTimer } from '../../hooks/useTimer';
 import { useKeyboardShortcuts } from '../../hooks/useKeyboardShortcuts';
 import { TotalProgressBar } from './TotalProgressBar';
@@ -8,7 +8,7 @@ import { Controls } from './Controls';
 
 interface LiveSidebarProps {
   session: Session;
-  onExit: (completedAt?: string) => void;
+  onExit: (updatedSections?: SessionSection[], completedAt?: string) => void;
 }
 
 export function LiveSidebar({ session, onExit }: LiveSidebarProps) {
@@ -21,6 +21,11 @@ export function LiveSidebar({ session, onExit }: LiveSidebarProps) {
     prevSection,
     reset,
   } = useTimer(session.sections);
+
+  const [sectionNotes, setSectionNotes] = useState<string[]>(
+    session.sections.map((s) => s.notes || '')
+  );
+  const notesRef = useRef<HTMLTextAreaElement>(null);
 
   // Track which sections are manually collapsed; active section starts expanded
   const [collapsedSections, setCollapsedSections] = useState<Set<number>>(
@@ -99,6 +104,11 @@ export function LiveSidebar({ session, onExit }: LiveSidebarProps) {
     }
   }, [timer.activeSectionIndex]);
 
+  const getUpdatedSections = useCallback(() =>
+    session.sections.map((s, i) => ({ ...s, notes: sectionNotes[i] || '' })),
+    [session.sections, sectionNotes]
+  );
+
   const handleEscape = useCallback(() => {
     toggleCollapse(timer.activeSectionIndex);
   }, [timer.activeSectionIndex]);
@@ -112,62 +122,83 @@ export function LiveSidebar({ session, onExit }: LiveSidebarProps) {
   });
 
   return (
-    <div className="w-[400px] h-screen flex flex-col bg-gray-900 text-gray-200 font-sans">
-      {/* Header bar with back button */}
-      <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => onExit()}
-            className="text-gray-400 hover:text-white text-sm transition-colors"
-          >
-            ← Back
-          </button>
-          <span className="text-xs text-gray-500">
-            Space: pause | →: next | ←: prev | Esc: collapse
-          </span>
-        </div>
-        <button
-          onClick={() => onExit(new Date().toISOString())}
-          className="px-3 py-1 text-xs border border-green-700 text-green-400 hover:bg-green-900/30 rounded transition-colors shrink-0"
-        >
-          Mark complete
-        </button>
-      </div>
-
-      {/* Total progress */}
-      <TotalProgressBar
-        companyName={session.companyName}
-        sessionName={session.name}
-        totalElapsed={timer.totalElapsed}
-        totalBudget={totalBudget}
-      />
-
-      {/* Sections list */}
-      <div className="flex-1 overflow-y-auto px-3 py-2 space-y-2">
-        {session.sections.map((section, i) => (
-          <div key={section.id} ref={(el) => { sectionRefs.current[i] = el; }}>
-            <SectionCard
-              section={section}
-              index={i}
-              activeIndex={timer.activeSectionIndex}
-              elapsed={timer.sectionElapsed[i] || 0}
-              paceStatus={getPaceStatus(i)}
-              nextSectionName={session.sections[i + 1]?.name}
-              collapsed={collapsedSections.has(i)}
-              onToggleCollapse={() => toggleCollapse(i)}
-            />
+    <div className="w-full h-screen flex bg-gray-900 text-gray-200 font-sans">
+      {/* Left sidebar: section list */}
+      <div className="w-[400px] shrink-0 flex flex-col border-r border-gray-700">
+        {/* Header bar with back button */}
+        <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => onExit(getUpdatedSections())}
+              className="text-gray-400 hover:text-white text-sm transition-colors"
+            >
+              ← Back
+            </button>
+            <span className="text-xs text-gray-500">
+              Space: pause | →: next | ←: prev | Esc: collapse
+            </span>
           </div>
-        ))}
+          <button
+            onClick={() => onExit(getUpdatedSections(), new Date().toISOString())}
+            className="px-3 py-1 text-xs border border-green-700 text-green-400 hover:bg-green-900/30 rounded transition-colors shrink-0"
+          >
+            Mark complete
+          </button>
+        </div>
+
+        {/* Total progress */}
+        <TotalProgressBar
+          companyName={session.companyName}
+          sessionName={session.name}
+          totalElapsed={timer.totalElapsed}
+          totalBudget={totalBudget}
+        />
+
+        {/* Sections list */}
+        <div className="flex-1 overflow-y-auto px-3 py-2 space-y-2">
+          {session.sections.map((section, i) => (
+            <div key={section.id} ref={(el) => { sectionRefs.current[i] = el; }}>
+              <SectionCard
+                section={section}
+                index={i}
+                activeIndex={timer.activeSectionIndex}
+                elapsed={timer.sectionElapsed[i] || 0}
+                paceStatus={getPaceStatus(i)}
+                nextSectionName={session.sections[i + 1]?.name}
+                collapsed={collapsedSections.has(i)}
+                onToggleCollapse={() => toggleCollapse(i)}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Controls */}
+        <Controls
+          isRunning={timer.isRunning}
+          onTogglePause={togglePause}
+          onNextSection={nextSection}
+          onReset={reset}
+          isLastSection={timer.activeSectionIndex === session.sections.length - 1}
+        />
       </div>
 
-      {/* Controls */}
-      <Controls
-        isRunning={timer.isRunning}
-        onTogglePause={togglePause}
-        onNextSection={nextSection}
-        onReset={reset}
-        isLastSection={timer.activeSectionIndex === session.sections.length - 1}
-      />
+      {/* Right panel: notes */}
+      <div className="flex-1 flex flex-col px-8 py-6">
+        <p className="text-xs text-gray-500 uppercase tracking-wider mb-3">
+          Notes — {session.sections[timer.activeSectionIndex]?.name}
+        </p>
+        <textarea
+          ref={notesRef}
+          value={sectionNotes[timer.activeSectionIndex] || ''}
+          onChange={(e) => {
+            const updated = [...sectionNotes];
+            updated[timer.activeSectionIndex] = e.target.value;
+            setSectionNotes(updated);
+          }}
+          placeholder="Type or dictate notes here..."
+          className="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white text-base leading-7 focus:outline-none focus:border-blue-500 resize-none"
+        />
+      </div>
     </div>
   );
 }
