@@ -3,6 +3,7 @@ import type { Session, SessionSection, PaceStatus } from '../../types';
 import { useTimer } from '../../hooks/useTimer';
 import { useKeyboardShortcuts } from '../../hooks/useKeyboardShortcuts';
 import { SectionTimerBar } from './SectionTimerBar';
+import { TotalProgressBar } from './TotalProgressBar';
 import { Controls } from './Controls';
 import { MarkdownRenderer } from '../shared/MarkdownRenderer';
 import { formatTime } from '../shared/TimeDisplay';
@@ -27,6 +28,20 @@ export function ImprovLive({ session, onExit }: ImprovLiveProps) {
     session.sections.map((s) => s.notes || '')
   );
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Track whether the Chrome extension sidepanel is open (it writes a fresh timestamp every ~1s)
+  const [extensionActive, setExtensionActive] = useState(() => {
+    const val = localStorage.getItem('interview-pacer-extension-active');
+    return val ? Date.now() - parseInt(val) < 3000 : false;
+  });
+  useEffect(() => {
+    const check = () => {
+      const val = localStorage.getItem('interview-pacer-extension-active');
+      setExtensionActive(val ? Date.now() - parseInt(val) < 3000 : false);
+    };
+    const interval = setInterval(check, 1500);
+    return () => clearInterval(interval);
+  }, []);
 
   // Write live state to localStorage for Chrome extension to read
   useEffect(() => {
@@ -140,6 +155,16 @@ export function ImprovLive({ session, onExit }: ImprovLiveProps) {
           Mark complete
         </button>
       </div>
+
+      {/* Total progress bar — only shown when Chrome extension is not open */}
+      {!extensionActive && (
+        <TotalProgressBar
+          companyName={session.companyName}
+          sessionName={session.name}
+          totalElapsed={timer.totalElapsed}
+          totalBudget={totalBudget}
+        />
+      )}
 
       {/* Main content — centered, max readable width */}
       <div className="flex-1 overflow-y-auto">
