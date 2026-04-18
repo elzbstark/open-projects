@@ -40,18 +40,8 @@ function startPolling() {
   }, 1000);
 }
 
-async function stopPolling() {
+function stopPolling() {
   if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
-  try {
-    const tabs = await chrome.tabs.query({});
-    const appTab = tabs.find((t) => t.url && t.url.includes(APP_URL));
-    if (appTab?.id) {
-      await chrome.scripting.executeScript({
-        target: { tabId: appTab.id },
-        func: () => localStorage.removeItem('interview-pacer-extension-active'),
-      });
-    }
-  } catch { /* tab may not exist */ }
 }
 
 async function readAppState() {
@@ -67,7 +57,6 @@ async function readAppState() {
     const results = await chrome.scripting.executeScript({
       target: { tabId: appTab.id },
       func: () => {
-        localStorage.setItem('interview-pacer-extension-active', Date.now().toString());
         const raw = localStorage.getItem('interview-pacer-live-state');
         if (!raw) return null;
         try {
