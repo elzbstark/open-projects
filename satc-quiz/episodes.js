@@ -46,8 +46,7 @@ const EPISODES = [
     moods:["restless","sad"],
     vibes:["messy","real_talk","fashion"],
     desc:"Carrie and Big go on an official date — but she suspects he's hiding her from his world.",
-    outfit:{carrie:"Fur coat by Pierre Cardin is paired with a naked dress by Donna Karan, diamond studs, nude sandals by Manolo Blahnik, and a snakeskin clutch.",charlotte:"Cream shirt and matching cardigan are paired with black pants, a brown flower necklace, and tortoise shell glasses.",miranda:"Black wool coat is worn with a black tank top, purple sweatpants, black leather gloves, a blue scarf, and a black workout bag with teal trim.",samantha:"Black wrap shirt is styled with black pants, a gold bracelet with red stone, and matching gold earrings."},
-    outfit:{carrie:"Fur Coat By Pierre Cardin Naked Dress By Donna Karan Diamond Studs Nude Sandals By Manolo Blahnik Snake Skin Clutch...",charlotte:"Cream Shirt Matching And Cardigan Black Pants Brown Flower Necklace Tortoise Shell Glasses",miranda:"Black Wool Coat Black Leather Gloves Black Workout Bag With Teal Trim Blue Scarf Black Tank Top Purple Sweatpants...",samantha:"Black Wrap Shirt Black Pants Gold Bracelet With Red Stone Gold Earrings With Red Stone"} },
+    outfit:{carrie:"Fur coat by Pierre Cardin is worn with a naked dress by Donna Karan, diamond studs, nude sandals by Manolo Blahnik, and a snakeskin clutch.",charlotte:"Cream shirt and matching cardigan are worn with black pants, a brown flower necklace, and tortoise shell glasses.",miranda:"Black wool coat is worn with black leather gloves, a black workout bag with teal trim, a blue scarf, a black tank top, and purple sweatpants.",samantha:"Black wrap shirt is paired with black pants, a gold bracelet with red stone, and gold earrings with red stone."} },
 
   { id:"s01e07", s:1, e:7, title:"The Monogamists",
     rating:7.5,
@@ -140,8 +139,7 @@ const EPISODES = [
     moods:["laugh","sad"],
     vibes:["comedy","messy","fashion"],
     desc:"Carrie gets fed up with Big ignoring her. Miranda accidentally ruins a long-distance romance.",
-    outfit:{carrie:"Skirt with print on front by Michael and Hushi is styled with a white tank top, patterned pink and red tote, the Carrie necklace, and gold play.",charlotte:"Red skirt suit.",miranda:"Pin-striped suit is worn with a blue striped button-down dress shirt.",samantha:"Gold dress is accessorized with matching earrings and a clutch."},
-    outfit:{carrie:"White Tank Top Skirt With Print On Front By Michael And Hushi Patterned Pink And Red Tote The Carrie Necklace Gold Play...",charlotte:"Red Skirt Suit",miranda:"Pin Striped Suit Blue Striped Button Down Dress Shirt",samantha:"Gold Dress Earrings Clutch"} },
+    outfit:{carrie:"White tank top is paired with a printed skirt by Michael and Hushi, a patterned pink and red tote, the Carrie necklace, and gold play.",charlotte:"Red skirt suit.",miranda:"Pin striped suit is worn with a blue striped button down dress shirt.",samantha:"Gold dress is accessorized with matching earrings and a clutch."} },
 
   { id:"s02e08", s:2, e:8, title:"The Man, the Myth, the Viagra",
     rating:7.6,
@@ -170,8 +168,7 @@ const EPISODES = [
     moods:["sad","restless"],
     vibes:["real_talk","messy","fashion"],
     desc:"Carrie attempts to leave her things at Big's place. Miranda learns one of her ovaries has stopped working.",
-    outfit:{carrie:"Leopard jumper worn with a pink beaded necklace, The Carrie Necklace, and Playboy Necklace by White Trash Charms.",charlotte:"Black shirt with white embroidery, paired with a white beaded bracelet and gold watch.",miranda:"Black and green dress by Moschino is paired with a dark red clutch, bracelet, and gold hoop earrings.",samantha:"Pink silk dress with spaghetti straps is paired with a purple clutch and gold hoop earrings."},
-    outfit:{carrie:"Leopard Jumper Pink Beaded Necklace The Carrie Necklace Playboy Necklace By White Trash Charms",charlotte:"Black Shirt With White Embroidery White Beaded Bracelet Gold Watch",miranda:"Women’S Black And Green Dress By Moschino Dark Red Clutch Bracelet Gold Hoop Earrings",samantha:"Pink Silk Dress With Spaghetti Straps Purple Clutch Gold Hoop Earrings"} },
+    outfit:{carrie:"Leopard jumper worn with a pink beaded necklace, The Carrie Necklace, and Playboy Necklace by White Trash Charms.",charlotte:"Black shirt with white embroidery, worn with a white beaded bracelet and gold watch.",miranda:"Black and green dress by Moschino is worn with a dark red clutch, a bracelet, and gold hoop earrings.",samantha:"Pink silk dress with spaghetti straps is paired with a purple clutch and gold hoop earrings."} },
 
   { id:"s02e12", s:2, e:12, title:"La Douleur Exquise!",
     rating:7.7,
@@ -200,8 +197,7 @@ const EPISODES = [
     moods:["laugh"],
     vibes:["comedy","real_talk","fashion"],
     desc:"Carrie dates an author with a very specific problem. Miranda dates a divorced dad.",
-    outfit:{carrie:"Tie-dye shirt and turquoise and yellow skirt with tan heels, The Carrie Necklace, and Playboy Necklace by White Trash Charms.",charlotte:"Black floral abstract dress by Anna Sui, styled with two bead bracelets.",miranda:"Blue shirt.",samantha:"White shirt worn with a gold watch and gold and red ring."},
-    outfit:{carrie:"Tie Die Shirt Turquoise And Yellow Skirt Tan Heels The Carrie Necklace Playboy Necklace By White Trash Charms",charlotte:"Black Floral Abstract Dress By Anna Sui Bead Bracelet Bead Bracelet",miranda:"Blue Shirt",samantha:"White Shirt Gold Watch Gold And Red Ring"} },
+    outfit:{carrie:"Tie-dye shirt and turquoise and yellow skirt with tan heels, The Carrie Necklace, and Playboy Necklace by White Trash Charms.",charlotte:"Black floral abstract dress by Anna Sui, worn with two bead bracelets.",miranda:"Blue shirt.",samantha:"White shirt worn with a gold watch and gold and red ring."} },
 
   { id:"s02e16", s:2, e:16, title:"Was It Good for You?",
     rating:7.5,
@@ -216,8 +212,7 @@ const EPISODES = [
     moods:["sad","restless"],
     vibes:["glamorous","messy","fashion"],
     desc:"Carrie runs into Big at the Hamptons — with his gorgeous 27-year-old girlfriend Natasha.",
-    outfit:{carrie:"Bathing suit top by Victoria's Secret with green men's bathing suit bottoms by Pacsun, layered under a white button-up shirt and The Carrie Necklace.",charlotte:"White and purple dress with flowers, worn with a silver star necklace.",miranda:"Red dress with gold detail by Sue Wong, paired with earrings.",samantha:"White shirt and sheer turquoise wrap skirt over white bathing suit bottoms, accessorised with diamond earrings and a diamond kamarband."},
-    outfit:{carrie:"Bathing Suit Top By Victoria Secret Green Men’S Bathing Suit Bottoms By Pacsun White Button Up Shirt The Carrie...",charlotte:"White And Purple Dress With Flowers Silver Star Necklace",miranda:"Red Dress With Gold Detail By Sue Wong Earrings",samantha:"White Shirt Sheer Turquoise Wrap Skirt White Bathing Suit Bottoms Diamond Earrings Diamond Kamarband"} },
+    outfit:{carrie:"Bathing suit top by Victoria's Secret worn with green men's bathing suit bottoms by PacSun and a white button-up shirt.",charlotte:"White and purple dress with flowers, worn with a silver star necklace.",miranda:"Red dress with gold detail by Sue Wong, worn with earrings.",samantha:"White shirt and sheer turquoise wrap skirt worn with white bathing suit bottoms, diamond earrings, and a diamond kamarband."} },
 
   { id:"s02e18", s:2, e:18, title:"Ex and the City",
     rating:8.1,
@@ -225,8 +220,7 @@ const EPISODES = [
     moods:["sad","restless"],
     vibes:["messy","real_talk","fashion"],
     desc:"Big is engaged. Carrie has to process what that means. Miranda ends up back in bed with Steve.",
-    outfit:{carrie:"White silk dress by Dior is worn with 1950s–60s gold clear vinyl multicolor rhinestone open toe mules by Catalano and a beaded bag.",charlotte:"Floral white dress is styled with fringe collar earrings.",miranda:"Blue floral dress by Diane Von Furstenberg is accessorized with a bamboo purse, silver necklace, and silver and red bracelet.",samantha:"Red dress by Plein Sud is paired with red pumps, gold hoop earrings, gold bracelet, sunglasses, and an animal print purse by Fendi."},
-    outfit:{carrie:"White Silk Dress By Dior 1950S-60S Gold Clear Vinyl Multicolor Rhinestone Open Toe Mules By Catalano Beaded Bag By...",charlotte:"Floral White Dress With Fringe Collar Earrings",miranda:"Blue Floral Dress By Diane Von Furstenberg Bamboo Purse Silver Necklace Silver And Red Bracelet",samantha:"Red Dress By Plein Sud Red Pumps Gold Hoop Earrings Gold Bracelet Sunglasses Animal Print Purse By Fendi"} },
+    outfit:{carrie:"White silk dress by Dior is paired with 1950s–60s gold clear vinyl multicolor rhinestone open toe mules by Catalano and a beaded bag.",charlotte:"Floral white dress is worn with fringe collar earrings.",miranda:"Blue floral dress by Diane Von Furstenberg is accessorized with a bamboo purse, silver necklace, and silver and red bracelet.",samantha:"Red dress by Plein Sud is styled with red pumps, gold hoop earrings, gold bracelet, sunglasses, and an animal print purse by Fendi."} },
 
   // ── SEASON 3 ───────────────────────────────────────────────────────────────
   { id:"s03e01", s:3, e:1, title:"Where There's Smoke...",
@@ -242,8 +236,7 @@ const EPISODES = [
     moods:["laugh","restless"],
     vibes:["comedy","real_talk","fashion"],
     desc:"The politician has a golden shower fetish. Miranda asks Steve to go steady.",
-    outfit:{carrie:"Red spaghetti strap top with a pink bow by Tuleh is from S/S 2000.",charlotte:"Leather coat is worn with a white shirt and diamond necklace.",miranda:"Taupe blazer is worn with a black shirt, green pants, and orange shoes.",samantha:"Red dress by Plein Sud is styled with a leopard print coat, gold necklace, gold hoop earrings, and gold bracelet."},
-    outfit:{carrie:"S/S 2000 Red Spaghetti Strap Top With Pink Bow By Tuleh",charlotte:"Leather Coat White Shirt Diamond Necklace",miranda:"Taupe Blazer Black Shirt Green Pants Orange Shoes",samantha:"Red Dress By Plein Sud Leopard Print Coat Gold Necklace Gold Hoop Earrings Gold Bracelet"} },
+    outfit:{carrie:"Red spaghetti strap top with a pink bow by Tuleh is from S/S 2000.",charlotte:"Leather coat is worn with a white shirt and diamond necklace.",miranda:"Taupe blazer is worn with a black shirt, green pants, and orange shoes.",samantha:"Red dress by Plein Sud is styled with a leopard print coat, gold necklace, gold hoop earrings, and gold bracelet."} },
 
   { id:"s03e03", s:3, e:3, title:"Attack of the 5'10\" Woman",
     rating:7.8,
@@ -251,8 +244,7 @@ const EPISODES = [
     moods:["sad","restless"],
     vibes:["messy","real_talk","fashion"],
     desc:"Carrie runs face-to-face into Natasha — Big's wife. Miranda hires Magda the opinionated maid.",
-    outfit:{carrie:"Black and brown wishbone dress by Ilia is layered under a colorful patchwork coat and accessorized with a gold flower pin, gold necklace with diamond ball, and anklet.",charlotte:"Grey coat worn over a white turtleneck and black pants.",miranda:"Yellow blazer worn with an orange shirt.",samantha:"White suit skirt is paired with a geometric cashmere tank top by John Galliano and a black purse."},
-    outfit:{carrie:"Black And Brown Wishbone Dress Colorful Patchwork Coat By Ilia Gold Flower Pin Gold Necklace With Diamond Ball Anklet...",charlotte:"White Turtle Neck Grey Coat Black Pants",miranda:"Yellow Blazer Orange Shirt",samantha:"White Suit Skirt Geometric Cashmere Tank Top By John Galliano Black Purse"} },
+    outfit:{carrie:"Black and brown wishbone dress is worn under a colorful patchwork coat by Ilia, with a gold flower pin, gold necklace with diamond ball, and anklet.",charlotte:"Grey coat worn over a white turtleneck and black pants.",miranda:"Yellow blazer worn with an orange shirt.",samantha:"White suit skirt is paired with a geometric cashmere tank top by John Galliano and a black purse."} },
 
   { id:"s03e04", s:3, e:4, title:"Boy, Girl, Boy, Girl...",
     rating:7.6,
@@ -281,8 +273,7 @@ const EPISODES = [
     moods:["cozy","restless"],
     vibes:["real_talk","messy","fashion"],
     desc:"Carrie is in a perfect relationship with Aidan — and is somehow more anxious than ever.",
-    outfit:{carrie:"Pink dress by Dior paired with a printed gold chain saddle bag and gold hoop Carrie earrings with Bulgari 18-karat yellow gold quartz.",charlotte:"Lipstick skirt by Prada worn with a white button-up shirt, white and black Prada purse, silver watch, and diamond stud earrings.",miranda:"Green button-down shirt worn over a pink undershirt with matching pants, a white purse, gold necklace, diamond stud earrings, and a silver ring.",samantha:"White ribbed sequin embroidered tank top by Dolce & Gabbana accessorized with a gold bracelet and gold rings, one with a red stone."},
-    outfit:{carrie:"Pink Dress Saddle Bag With Printed Gold Chains By Dior Gold Hoop Carrie Earrings Bulgar 18 Karat Yellow Gold Quartz...",charlotte:"White Button Up Shirt Lipstick Skirt By Prada White And Black Purse By Prada Silver Watch Diamond Stud Earrings",miranda:"Green Button Down Shirt Pink Undershirt White Purse Matching Pants Gold Necklace Diamond Stud Earrings Silver Ring",samantha:"White Ribbed Sequin Embroidered Tank Top By Dolce & Gabbana Gold Bracelet Gold Ring Gold Ring With Red Stone"} },
+    outfit:{carrie:"Pink Dior dress paired with a printed gold chains saddle bag, gold hoop Carrie earrings, and Bulgari 18-karat yellow gold quartz accessories.",charlotte:"Lipstick skirt by Prada paired with a white button-up shirt, Prada white and black purse, silver watch, and diamond stud earrings.",miranda:"Green button-down shirt layered over a pink undershirt, with matching pants, a white purse, gold necklace, diamond stud earrings, and a silver ring.",samantha:"White ribbed sequin embroidered tank top by Dolce & Gabbana styled with a gold bracelet and two gold rings."} },
 
   { id:"s03e08", s:3, e:8, title:"The Big Time",
     rating:7.8,
@@ -304,8 +295,7 @@ const EPISODES = [
     moods:["sad","restless"],
     vibes:["messy","real_talk","fashion"],
     desc:"Carrie feels guilty and tries to end the affair with Big. Charlotte negotiates her prenup.",
-    outfit:{carrie:"Blue cloud print shirt by Patricia Field worn with blue pants, a blue "I Shot Jr" belt, a white jacket, and a brown leather Fendi purse.",charlotte:"Tan striped sleeveless dress by Marc Jacobs styled with a green and tan tote and tan headband.",miranda:"Yellow and purple dress by Louis Vuitton worn with silver concentric circle earrings.",samantha:"Red dress accessorized with gold hoop earrings, a diamond bracelet, a gold ring with a black stone, red shiny heels, and a gold clutch."},
-    outfit:{carrie:"Blue Cloud Print Shirt By Patricia Field Blue Pants Blue Belt I Shot Jr White Jacket Brown Leather Purse By Fendi Red...",charlotte:"Tan Striped Sleeveless Dress By Marc Jacobs Green And Tan Tote Tan Head Band",miranda:"Yellow And Purple Dress By Louis Vuitton Silver Concentric Circle Earrings",samantha:"Red Dress Gold Hoop Earrings Diamond Bracelet Gold Ring With Black Stone Red Shiny Heels Gold Clutch"} },
+    outfit:{carrie:"Blue cloud print shirt by Patricia Field worn with blue pants, a blue 'I Shot Jr' belt, a white jacket, and a Fendi brown leather purse.",charlotte:"Tan striped sleeveless dress by Marc Jacobs accessorized with a green and tan tote and tan headband.",miranda:"Yellow and purple Louis Vuitton dress paired with silver concentric circle earrings.",samantha:"Red dress paired with gold hoop earrings, a diamond bracelet, a gold ring with black stone, red shiny heels, and a gold clutch."} },
 
   { id:"s03e11", s:3, e:11, title:"Running with Scissors",
     rating:7.9,
@@ -327,8 +317,7 @@ const EPISODES = [
     moods:["laugh","restless"],
     vibes:["glamorous","comedy","fashion"],
     desc:"The girls head to LA. Carrie meets Matthew McConaughey about optioning her column.",
-    outfit:{carrie:"White frilly dress with painted geisha by Michael and Hushi paired with a gold diamond watch from the Fall 2001 Persian Collection.",charlotte:"Green and pink floral shirt styled with red pants, pink flip-flops, diamond studs, and a pink beaded bracelet.",miranda:"Pink button-up shirt with sequins worn with jeans, silver earrings, and a silver necklace.",samantha:"Turquoise sequin matching top and pants by Mandalay worn with green strappy heels, a white purse, and a silver ring."},
-    outfit:{carrie:"Fall 2001 Persian Collection White Frilly Dress With Painted Geisha By Michael And Hushi Gold Diamond Watch Gold And...",charlotte:"Green And Pink Floral Shirt Red Pants Pink Flip-Flops With Pink Flower Diamond Studs Pink Beaded Bracelet Wedding Ring...",miranda:"Pink Button Up Shirt With Sequins Jeans Silver Earrings Silver Necklace",samantha:"Turquoise Sequin Matching Top And Pants By Mandalay Silver Ring Silver Ring Green Starppy Heels White Purse Turquoise..."} },
+    outfit:{carrie:"White frilly dress with painted geisha by Michael and Hushi, from the Fall 2001 Persian Collection, with a gold diamond watch.",charlotte:"Green and pink floral shirt paired with red pants, pink flip-flops, diamond studs, and a pink beaded bracelet.",miranda:"Pink sequin button-up shirt worn with jeans, silver earrings, and a silver necklace.",samantha:"Turquoise sequin matching top and pants by Mandalay worn with green strappy heels, white purse, and silver rings."} },
 
   { id:"s03e14", s:3, e:14, title:"Sex and Another City",
     rating:7.7,
@@ -336,8 +325,7 @@ const EPISODES = [
     moods:["laugh","celebratory"],
     vibes:["glamorous","comedy","fashion"],
     desc:"LA girls' trip: celebrity perks, Hugh Hefner, and a night at the Playboy Mansion.",
-    outfit:{carrie:"Red/orange dress by Tracy Feith worn with colorful heels by Manolo Blahnik, a purple sequin purse by Fendi, and a fabric flower.",charlotte:"Ombre dress by Tahari styled with white sandals, silver earrings, a diamond bracelet, and luggage by Burberry.",miranda:"Black strapless shirt by DKNY paired with black pants by DKNY, red pumps, a purse by Rafe, and a silver bracelet.",samantha:"Pink spaghetti strap shirt styled with red pants with white cuffs, a gold belt, purse by Louis Vuitton, and gold hoop earrings."},
-    outfit:{carrie:"Carrie: Red/Orange Dress By Tracy Feith Colorful Heels By Manolo Bhanik Purple Sequin Purse By Fendi Fabric Flower...",charlotte:"Ombre Dress By Tahari Silver Earrings Diamond Bracelet Luggage Set By Burberry White Sandals",miranda:"Black Strapless Shirt By Dkny Black Pants By Dkny Red Pumps Purse By Rafe Silver Bracelet",samantha:"Pink Spaghetti Strap Shirt Red Pants With White Cuffs Gold Belt Purse By Louis Vuitton Gold Bracelet Gold Hoop Earrings..."} },
+    outfit:{carrie:"Red/orange dress by Tracy Feith worn with colorful heels by Manolo Blahnik, purple sequin purse by Fendi, and a fabric flower.",charlotte:"Ombre dress by Tahari worn with white sandals, silver earrings, diamond bracelet, and luggage set by Burberry.",miranda:"Black strapless shirt and pants by DKNY worn with red pumps, purse by Rafe, and a silver bracelet.",samantha:"Pink spaghetti strap shirt with red pants, white cuffs, gold belt, purse by Louis Vuitton, gold bracelet, and gold hoop earrings."} },
 
   { id:"s03e15", s:3, e:15, title:"Hot Child in the City",
     rating:7.9,
@@ -345,8 +333,7 @@ const EPISODES = [
     moods:["laugh"],
     vibes:["comedy","real_talk","fashion"],
     desc:"Samantha plans a bar mitzvah for a spoiled teen. Charlotte catches Trey masturbating.",
-    outfit:{carrie:"Multi-colored top by Chanel worn with pink and purple capris by Just In Time, purple and white heels, a purple round purse, and turquoise accessories.",charlotte:"Black dress paired with red platform sandals and a silver watch by Cartier.",miranda:"Khaki suit worn with a green gemstone and diamond necklace, diamond earrings, and a ring.",samantha:"Black pinstriped suit skirt worn with black and white pumps, a black and white mini purse, and diamond earrings."},
-    outfit:{carrie:"Multi-Colored Top By Chanel Pink And Purple Capris By Just In Time Purple And White Heels Purple Round Purse Turquoise...",charlotte:"Black Dress Red Sandals With Platform Heel Silver Watch By Cartier",miranda:"Khaki S Uit Green Gemstone And Diamond Necklace Diamond Earrings Ring",samantha:"Black Pin Striped Suit Skirt Diamond Earrings Black And White Pumps Black And White Mini Purse"} },
+    outfit:{carrie:"Multi-colored top by Chanel worn with pink and purple capris by Just In Time, purple and white heels, and a purple round purse.",charlotte:"Black dress paired with red platform sandals and a silver watch by Cartier.",miranda:"Khaki suit worn with a green gemstone and diamond necklace, diamond earrings, and a ring.",samantha:"Black pinstriped suit skirt worn with black and white pumps, diamond earrings, and a black and white mini purse."} },
 
   { id:"s03e16", s:3, e:16, title:"Frenemies",
     rating:7.6,
@@ -361,8 +348,7 @@ const EPISODES = [
     moods:["sad","restless"],
     vibes:["messy","real_talk","fashion"],
     desc:"Carrie decides she needs to clear her karma and face Natasha. Charlotte and Trey decide to separate.",
-    outfit:{carrie:"Red giraffe print dress by Roberto Cavalli styled with bronze heels by Manolo Blahnik, a green frog pin, and a green rhinestone watch.",charlotte:"Purple floral dress by Dolce & Gabbana carried with a pink purse.",miranda:"Red dress accessorized with a gold purse, gold diamond clip-on earrings, and a collar bib necklace by Kenneth Jay Lane.",samantha:"Purple skirt and shirt worn over a black undershirt with gold hoop earrings and a gold ring with red stone."},
-    outfit:{carrie:"Red Giraffe Print Dress By Roberto Cavalli Bronze Heels By Manolo Blahnik Green Frog Pin Green Rhinestone Watch Purple...",charlotte:"Purple Floral Dress By Dolce & Gabbana Pink Purse",miranda:"Red Dress Gold Purse Gold Diamond Clip On Earrings Collar Bib Necklace By Kenneth Jay Lane",samantha:"Purple Skirt Shirt Black Undershirt Gold Hoop Earrings Gold Ring With Red Stone"} },
+    outfit:{carrie:"Red giraffe print dress by Roberto Cavalli styled with bronze heels by Manolo Blahnik, a green frog pin, and a green rhinestone watch.",charlotte:"Purple floral dress by Dolce & Gabbana carried with a pink purse.",miranda:"Red dress accessorized with a gold purse, gold diamond clip-on earrings, and a collar bib necklace by Kenneth Jay Lane.",samantha:"Purple skirt and shirt worn over a black undershirt with gold hoop earrings and a gold ring with red stone."} },
 
   { id:"s03e18", s:3, e:18, title:"Cock a Doodle Do!",
     rating:8.0,
@@ -385,8 +371,7 @@ const EPISODES = [
     moods:["celebratory","laugh"],
     vibes:["fashion","glamorous"],
     desc:"Carrie walks in a fashion show. The iconic episode where all four wrestle with their own beauty.",
-    outfit:{carrie:"White jacket by Helmut Lang paired with red pumps by Manolo Blahnik, a bag by Fendi, and aviator sunglasses by Ray-Ban.",charlotte:"Black shirt and navy pants worn with pink slippers with a red flower, silver hoop earrings, a silver Cartier watch, and a gold ring.",miranda:"80s Native Saltillo hand knit cardigan by Ralph Lauren worn with a red turtleneck.",samantha:"Black dress with red flowers layered under a white trench coat, paired with a red and black purse with gold base, gold hoop earrings, and a gold necklace."},
-    outfit:{carrie:"White Jacket By Helmut Lang Red Pumps By Manolo Blahnik Bag By Fendi Aviator Sunglasses By Ray-Ban",charlotte:"Black Shirt Navy Pants Pink Slippers With Red Flower Silver Hoop Earrings Silver Cartier Watch Gold Ring",miranda:"80S Native Saltillo Hand Knit Cardigan By Ralph Lauren Red Turtleneck",samantha:"Black Dress With Red Flowers White Trench Coat Red And Black Purse With Gold Base Gold Hoop Earrings Gold Necklace Gold..."} },
+    outfit:{carrie:"White jacket by Helmut Lang paired with red pumps by Manolo Blahnik, a bag by Fendi, and aviator sunglasses by Ray-Ban.",charlotte:"Black shirt and navy pants worn with pink slippers with a red flower, silver hoop earrings, a silver Cartier watch, and a gold ring.",miranda:"80s Native Saltillo hand knit cardigan by Ralph Lauren worn with a red turtleneck.",samantha:"Black dress with red flowers worn under a white trench coat with a red and black purse with gold base, gold hoop earrings, and a gold necklace."} },
 
   { id:"s04e03", s:4, e:3, title:"Defining Moments",
     rating:7.6,
@@ -450,8 +435,7 @@ const EPISODES = [
     moods:["sad","restless"],
     vibes:["real_talk","messy","fashion"],
     desc:"Carrie tells Aidan about her past abortion. Miranda discovers she's pregnant and debates what to do.",
-    outfit:{carrie:"Pants with a printed horse by Chloé paired with a sheer white shirt, a white and green striped shirt, gold necklace, and a purse.",charlotte:"Black and white floral checkered dress by David Gregory, worn with a pearl necklace, diamond studs, and a peach bag by Charles Jourdan.",miranda:"Multicolored dress by Cacharel styled with a striped bag, watch, and red leather bracelet.",samantha:"Purple Label halter dress by Ralph Lauren accessorized with gold hoop earrings, a spider bracelet, gold bracelet, gold pearl ring, and gold ring."},
-    outfit:{carrie:"Sheer White Shirt Pants With Printed Horse By Chloé Purse White And Green Striped Shirt Gold Necklace",charlotte:"Black And White Floral Checkered Dress By David Gregory Pearl Necklace Diamond Studs Peach Bag By Charles Jourdan",miranda:"Multicolored Dress By Cacharel Striped Bag Watch Red Leather Bracelet",samantha:"Purple Label Halter Dress By Ralph Lauren Gold Hoop Earrings Spider Bracelet Gold Bracelet Gold Pearl Ring Gold Ring..."} },
+    outfit:{carrie:"Pants with a printed horse by Chloé paired with a sheer white shirt, a white and green striped shirt, gold necklace, and a purse.",charlotte:"Black and white floral checkered dress by David Gregory, styled with a pearl necklace, diamond studs, and a peach bag by Charles Jourdan.",miranda:"Multicolored dress by Cacharel worn with a striped bag, watch, and red leather bracelet.",samantha:"Purple Label halter dress by Ralph Lauren accessorized with gold hoop earrings, a spider bracelet, gold bracelet, gold pearl ring, and gold ring."} },
 
   { id:"s04e12", s:4, e:12, title:"Just Say Yes",
     rating:7.9,
@@ -459,8 +443,7 @@ const EPISODES = [
     moods:["celebratory","restless"],
     vibes:["messy","real_talk","fashion"],
     desc:"Aidan proposes. Miranda tells Steve she's pregnant. Big decisions all around.",
-    outfit:{carrie:"Turquoise top by Chloé paired with a purple skirt with white feather bustle by Vivienne Westwood, a white and gold belt, and sandals.",charlotte:"Blue dress styled with a green and pink belt, diamond silver hoop earrings, and red wedges.",miranda:"Red button-up shirt by Ellen Tracy layered with a black shirt, black skirt by Armani, red bracelet, gold clip-on earrings, and red leather accessories.",samantha:"Black and white striped button-up top by Daryl K. worn with white pants by Guess, white sandals by Manolo Blahnik, and pearl earrings."},
-    outfit:{carrie:"Turquoise Top By Chloé White And Gold Belt Purple Skirt With White Feather Bustle By Vivienne Westwood Sandals By...",charlotte:"Blue Dress Green And Pink Belt Diamond Silver Hoop Earrings Red Wedges",miranda:"Red Button Up Shirt By Ellen Tracy Black Shirt Black Skirt By Armani Red Bracelet Gold Clip On Earrings Red Leather...",samantha:"Black And White Striped Button Up Top By Daryl K. White Pants By Guess White Sandals By Manolo Blahnik Pearl Earrings..."} },
+    outfit:{carrie:"Turquoise top by Chloé paired with a white and gold belt, a purple skirt with white feather bustle by Vivienne Westwood, and sandals.",charlotte:"Blue dress styled with a green and pink belt, diamond silver hoop earrings, and red wedges.",miranda:"Red button-up shirt by Ellen Tracy layered with a black shirt, black skirt by Armani, red bracelet, gold clip-on earrings, and red leather accessories.",samantha:"Black and white striped button-up top by Daryl K. worn with white pants by Guess, white sandals by Manolo Blahnik, and pearl earrings."} },
 
   { id:"s04e13", s:4, e:13, title:"The Good Fight",
     rating:7.7,
@@ -482,8 +465,7 @@ const EPISODES = [
     moods:["restless","sad"],
     vibes:["messy","real_talk","fashion"],
     desc:"Carrie panics at the idea of marrying Aidan. Miranda learns her baby's gender. Samantha catches Richard cheating.",
-    outfit:{carrie:"White dress by Badgley Mischka worn with strappy silver sandals, crystal drop chandelier earrings by Fred Leighton, and an engagement ring.",charlotte:"Black sequin spaghetti strap top with sheer back paired with a long white silk skirt, black purse, diamond earrings, and silver diamond jewelry.",miranda:"Black dress styled with square diamond earrings, a diamond silver bracelet, and a black sequin purse.",samantha:"Silver cheetah silk chain dress by Thierry Mugler (2001 Couture Runway) paired with a black clutch by Valentino and diamond earrings."},
-    outfit:{carrie:"White Dress By Badgley Mischka Strappy Silver Sandals Crystal Drop Chandelier Earrings By Fred Leighton Engagement Ring...",charlotte:"Black Sequin Spaghetti Strap Top With Sheer Back Long White Silk Skirt Black Purse Diamond Earrings Silver Diamond...",miranda:"Black Dress Square Diamond Earrings Diamond Silver Bracelet Black Purse With Sequins",samantha:"2001 Couture Runway Silver Cheetah Silk Chain Dress By Thierry Mugler Black Clutch By Valentino Diamond Earrings By..."} },
+    outfit:{carrie:"White dress by Badgley Mischka worn with strappy silver sandals, crystal drop chandelier earrings by Fred Leighton, and an engagement ring.",charlotte:"Black sequin spaghetti strap top with sheer back paired with a long white silk skirt, black purse, diamond earrings, and silver diamond jewelry.",miranda:"Black dress is styled with square diamond earrings, a diamond silver bracelet, and a black sequin purse.",samantha:"Silver cheetah silk chain dress by Thierry Mugler (2001 Couture Runway) is paired with a black clutch by Valentino and diamond earrings."} },
 
   { id:"s04e16", s:4, e:16, title:"Ring a Ding Ding",
     rating:7.8,
@@ -505,8 +487,7 @@ const EPISODES = [
     moods:["sad","celebratory"],
     vibes:["real_talk","messy","fashion"],
     desc:"Big is moving to Napa. Carrie gives him a proper NYC send-off. Miranda gives birth to Brady.",
-    outfit:{carrie:"Black dress by Celine worn with a green and purple metallic coat by Momo Falana, the Carrie Necklace, and stud flower earrings.",charlotte:"White and red floral dress worn with sandals, silver diamond hoop earrings, and a tan beaded purse.",miranda:"Green wavy V-neck shirt accessorized with amber clip-on earrings and a green suede striped handbag by Tocca.",samantha:"Turquoise cowl neck shirt by Iceberg paired with a red skirt by Valentino, a cobalt blue belt, blue hoop earrings, and a white and gold purse."},
-    outfit:{carrie:"Black Dress By Celine Green And Purple Metallic Coat By Momo Falana The Carrie Necklace Stud Flower Earrings Silver...",charlotte:"White And Red Floral Dress Sandals Silver Diamond Hoop Earrings Tan Beaded Purse",miranda:"Green Wavy V-Neck Shirt Amber Clip On Earrings Green Suede Handbag With Stripe Detail By Tocca",samantha:"Turquoise Cowl Neck Shirt By Iceberg Red Skirt By Valentino Cobalt Blue Belt Blue Hoop Earrings White And Gold Purse..."} },
+    outfit:{carrie:"Black dress by Celine is worn with a green and purple metallic coat by Momo Falana, the Carrie necklace, and stud flower earrings.",charlotte:"White and red floral dress is worn with sandals, silver diamond hoop earrings, and a tan beaded purse.",miranda:"Green wavy V-neck shirt is accessorized with amber clip-on earrings and a green suede striped handbag by Tocca.",samantha:"Turquoise cowl neck shirt by Iceberg is paired with a red skirt by Valentino, a cobalt blue belt, blue hoop earrings, and a white and gold purse."} },
 
   // ── SEASON 5 ───────────────────────────────────────────────────────────────
   { id:"s05e01", s:5, e:1, title:"Anchors Away",
@@ -642,8 +623,7 @@ const EPISODES = [
     moods:["sad","restless"],
     vibes:["messy","real_talk","fashion"],
     desc:"Big needs heart surgery and Carrie spirals. Miranda grows close to Robert but can't stop thinking about Steve.",
-    outfit:{carrie:"Y2K off-white fairy dress with sequins by Paco Rabanne worn over a black and pink bra by Cosabella with silver heels and a gold bracelet.",charlotte:"Pink sleeveless lace top by Moschino paired with a white poppy skirt, a woven handbag with black trim by, and small pink hoop earrings.",miranda:"Sheer white collared V-neck shirt paired with a brown pencil skirt, brown belt with round buckle, brown leather pumps, and pearl stud clip earrings.",samantha:"Hot pink spaghetti strap dress accessorized with a gold chain necklace with hot pink acrylic gems, gold hoop earrings, and a gold bracelet."},
-    outfit:{carrie:"Black And Pink Bra By Cosabella Y2K Off White Fairy Dress With Sequins By Paco Rabanne Silver Heels Gold Bracelet With...",charlotte:"Pink Sleeveless Lace Top By Moschino White Skirt With Poppies Woven Handbag With Black Trim And Handles Small Pink Hoop...",miranda:"Sheer White Collared V-Neck Shirt Grown Pencil Skirt Brown Belt With Round Buckle Brown Leather Pumps Pearl Stud Clip...",samantha:"Hot Pink Spaghetti Strap Dress Gold Chain Necklace With Hot Pink Acrylic Gems Gold Hoop Earrings Gold Bracelet With..."} },
+    outfit:{carrie:"Y2K off-white fairy dress with sequins by Paco Rabanne is layered over a black and pink bra by Cosabella with silver heels and a gold bracelet.",charlotte:"Pink sleeveless lace top by Moschino is worn with a white poppy skirt, a woven handbag with black trim by, and small pink hoop earrings.",miranda:"Sheer white collared V-neck shirt is paired with a brown pencil skirt, brown belt with round buckle, brown leather pumps, and pearl stud clip earrings.",samantha:"Hot pink spaghetti strap dress is styled with a gold chain necklace with hot pink acrylic gems, gold hoop earrings, and a gold bracelet."} },
 
   { id:"s06e12", s:6, e:12, title:"One",
     rating:7.9,
@@ -700,8 +680,7 @@ const EPISODES = [
     moods:["sad","cozy"],
     vibes:["glamorous","messy","fashion"],
     desc:"Carrie's last dinner in New York with her girls. Paris isn't what she expected. Big gets on a plane.",
-    outfit:{carrie:"Striped flower sweater by Sonia Rykiel is paired with a black sparkly coat by Behnaz Sarafpour, tan gloves, and a white vintage clutch.",charlotte:"Brown skirt suit is worn with a thin black belt, tan coat with green stitching, and diamond stud earrings.",miranda:"Black plaid skirt suit with strappy heels, a white sweater, snakeskin pants, brown boots, and gold grape accessories.",samantha:"Floral long sleeveless dress is styled with long green gloves, a black and gold ring, and long beaded earrings."},
-    outfit:{carrie:"Women Striped Flower Sweater By Sonia Rykiel Black Sparkly Coat By Behnaz Sarafpour Tan Gloves White Vintage Clutch By...",charlotte:"Brown Skirt Suit Thin Black Belt Tan Coat With Green Stitching Diamond Stud Earrings",miranda:"Miranda: Black Plaid Skirt Suit Black Strappy Heels Miranda: White Sweater Snake Skin Pants Brown Boots Gold Grape...",samantha:"Floral Long Sleeveless Dress Long Green Gloves Black And Gold Ring Long Beaded One Strand Earrings"} },
+    outfit:{carrie:"Striped flower sweater by Sonia Rykiel is paired with a black sparkly coat by Behnaz Sarafpour, tan gloves, and a white vintage clutch.",charlotte:"Brown skirt suit with a thin black belt, tan coat with green stitching, and diamond stud earrings.",miranda:"Black plaid skirt suit with strappy heels, a white sweater, snakeskin pants, brown boots, and gold grape accessories.",samantha:"Floral long sleeveless dress is worn with long green gloves, a black and gold ring, and long beaded earrings."} },
 
   { id:"s06e20", s:6, e:20, title:"An American Girl in Paris (Part Deux)",
     rating:8.7,
@@ -709,6 +688,5 @@ const EPISODES = [
     moods:["cozy","celebratory","sad"],
     vibes:["glamorous","real_talk","messy","fashion"],
     desc:"The series finale. Everything resolves — Samantha, Miranda, Charlotte, and finally, Carrie and Big.",
-    outfit:{carrie:"Long fur coat by Pierre Cardin is worn over a brown patterned dress by Prada with red heels by Manolo Blahnik.",charlotte:"Lavender shirt and white skirt are layered under a purple coat by Tse, with diamond stud flower earrings and a pink purse by Chanel.",miranda:"Red wrap sweater and black skirt are completed with a red multi-colored plaid coat, wrap-around scarf, red purse, and black gloves.",samantha:"White V-neck textured shirt is paired with a fuchsia skirt, green jacket, white belt, orange boots, and gold hoop earrings."},
-    outfit:{carrie:"Long Fur Coat By Pierre Cardin The Carrie Necklace Brown Dress With Brown Patterns By Prada Red Heels By Manolo Blahnik...",charlotte:"Lavender Shirt White Skirt Purple Coat By Tse Diamond Stud Flower Earrings Pink Purse By Chanel",miranda:"Red Wrap Sweater Black Skirt Black Boots Red Multi-Colored Plaid Coat With Wrap Around Scarf Red Purse Black Gloves",samantha:"White V-Neck Textured Shirt Fuchsia Skirt Green Jacket White Belt White Coral Buckle Orange Boots Gold Hoop Earrings..."} },
+    outfit:{carrie:"Long fur coat by Pierre Cardin is styled with a brown patterned dress by Prada and red heels by Manolo Blahnik.",charlotte:"Lavender shirt with a white skirt, purple coat by Tse, diamond stud flower earrings, and a pink purse by Chanel.",miranda:"Red wrap sweater with a black skirt, black boots, red multi-colored plaid coat with wrap-around scarf, red purse, and black gloves.",samantha:"White V-neck textured shirt is paired with a fuchsia skirt, green jacket, white belt, orange boots, and gold hoop earrings."} },
 ];
