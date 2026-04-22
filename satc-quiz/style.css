@@ -548,11 +548,16 @@ body::after {
 .ep-outfit {
   font-family: 'Space Mono', monospace;
   font-size: 9px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   color: var(--ink-50, #999);
   line-height: 1.7;
   padding-top: 10px;
-  font-style: italic;
+  border-top: 1px solid var(--ink-20);
+}
+
+.ep-outfit em {
+  font-style: normal;
+  color: var(--hot);
 }
 
 /* ── Seen-it button ────────────────────────────────────────────────────────── */

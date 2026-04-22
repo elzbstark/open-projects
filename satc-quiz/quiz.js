@@ -167,7 +167,10 @@ function getTopEpisodes(mood, character, vibe, n = 2) {
 // ── Outfit ────────────────────────────────────────────────────────────────────
 function getOutfit(ep, character) {
   if (!ep.outfit) return "";
-  return ep.outfit[character] || ep.outfit.carrie || Object.values(ep.outfit)[0] || "";
+  const char = ep.outfit[character] ? character : (ep.outfit.carrie ? "carrie" : Object.keys(ep.outfit)[0]);
+  const desc = ep.outfit[char] || "";
+  if (!desc) return "";
+  return `<em>${CHAR_LABELS[char]}</em>: ${desc}`;
 }
 
 // ── Explanation ───────────────────────────────────────────────────────────────
