@@ -545,6 +545,16 @@ body::after {
   color: var(--hot);
 }
 
+.ep-outfit {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--ink-50, #999);
+  line-height: 1.7;
+  padding-top: 10px;
+  font-style: italic;
+}
+
 /* ── Seen-it button ────────────────────────────────────────────────────────── */
 .btn-seen {
   display: inline-flex;

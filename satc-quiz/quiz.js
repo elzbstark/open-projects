@@ -164,6 +164,12 @@ function getTopEpisodes(mood, character, vibe, n = 2) {
   return scored.slice(0, n).map(x => x.ep);
 }
 
+// ── Outfit ────────────────────────────────────────────────────────────────────
+function getOutfit(ep, character) {
+  if (!ep.outfit) return "";
+  return ep.outfit[character] || ep.outfit.carrie || Object.values(ep.outfit)[0] || "";
+}
+
 // ── Explanation ───────────────────────────────────────────────────────────────
 function buildExplanation(ep, mood, character, vibe) {
   const parts = [];
@@ -270,6 +276,7 @@ function showResults() {
       <h3 class="ep-title">${ep.title}</h3>
       <p class="ep-desc">${ep.desc}</p>
       <p class="ep-why">${buildExplanation(ep, mood, character, vibe)}</p>
+      ${vibe === "fashion" && ep.outfit ? `<p class="ep-outfit">${getOutfit(ep, character)}</p>` : ""}
       <button class="btn-seen ${isWatched ? "is-watched" : ""}" data-ep-id="${ep.id}">
         <span class="seen-check">&#10003;</span>
         <span class="seen-label">${isWatched ? "Watched" : "Seen It"}</span>
