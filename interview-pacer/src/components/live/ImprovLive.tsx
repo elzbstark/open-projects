@@ -133,12 +133,21 @@ export function ImprovLive({ session, onExit }: ImprovLiveProps) {
             Space: pause | →: next | ←: prev | Esc: exit
           </span>
         </div>
-        <button
-          onClick={handleComplete}
-          className="px-3 py-1 text-xs border border-green-700 text-green-400 hover:bg-green-900/30 rounded transition-colors shrink-0"
-        >
-          Mark complete
-        </button>
+        <div className="flex flex-col items-end gap-1 shrink-0">
+          <button
+            onClick={handleComplete}
+            className="px-3 py-1 text-xs border border-green-700 text-green-400 hover:bg-green-900/30 rounded transition-colors"
+          >
+            Mark complete
+          </button>
+          <span
+            className={`text-sm font-mono ${
+              timer.totalElapsed >= totalBudget ? 'text-amber-400' : 'text-gray-400'
+            }`}
+          >
+            {formatTime(totalBudget - timer.totalElapsed)}
+          </span>
+        </div>
       </div>
 
       {/* Main content — centered, max readable width */}
