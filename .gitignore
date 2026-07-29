@@ -1,5 +1,16 @@
-# Private — never commit
+# Private — never commit.
+#
+# interview-pacer's planning half lives here alongside the code as of 2026-07-28. It used to
+# sit in a second directory in the private repo, which caused a real failure: /site-review ran
+# from this directory on 2026-04-02, found no PROJECT_GOALS.md because it was in the other
+# copy, and graded the app against goals inferred from the README instead.
+#
+# These are untracked and must stay that way. Note that .gitignore does NOT protect a file git
+# already tracks, so never `git add -f` one of these. See ../LOCAL-ONLY-ENFORCEMENT.md.
 interview-pacer/feedback/
+interview-pacer/PROJECT_GOALS.md
+interview-pacer/ROADMAP.md
+interview-pacer/ui-playgrounds/
 
 # Dependencies
 node_modules/

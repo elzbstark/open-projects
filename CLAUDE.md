@@ -20,7 +20,7 @@ Never push to this repo without explicit approval. Always confirm: "Ready to pus
 
 ## Projects in this repo
 
-- `interview-pacer/` — Vite + TypeScript, deployed to Vercel. `feedback/` folder is local-only, never commit it.
+- `interview-pacer/` — Vite + TypeScript, deployed to Vercel. Four things here are **local-only, never commit them**: `feedback/`, `PROJECT_GOALS.md`, `ROADMAP.md`, `ui-playgrounds/`. All four are in `.gitignore`. They moved here from a second directory in the private repo on 2026-07-28; keeping the planning docs next to the code means `/site-review` and `/build-phase` find them. Before that, a 2026-04-02 review graded the app against goals guessed from the README because `PROJECT_GOALS.md` was in the other copy.
 - `satc-quiz/` — Static HTML/JS/CSS, deployed to satc-rewatch.vercel.app (Vercel root dir: `satc-quiz`). No build step. SATC episode recommender quiz.
 - `morning-brief/` — showcase copy only. The live version runs from the private repo. Update manually when the private version has significant changes worth showing; always diff for personal info before committing.
 - `baby-nutrition-tracker/` — stub/reference only; full app lives in private repo.
