@@ -7,7 +7,7 @@
 
 ## Overview
 
-A password-protected web app where a nanny can log what a baby/toddler eats throughout the day — by typing or voice dictation. The app keeps a running log and uses it to summarize nutrition, flag gaps, and recommend new foods.
+A password-protected web app where a caregiver can log what a baby/toddler eats throughout the day — by typing or voice dictation. The app keeps a running log and uses it to summarize nutrition, flag gaps, and recommend new foods.
 
 ---
 
@@ -21,7 +21,7 @@ A password-protected web app where a nanny can log what a baby/toddler eats thro
 | Daily nutrition score | ↑ | % of daily goals met across key nutrients |
 
 ### Secondary
-- Nanny satisfaction (qualitative)
+- Caregiver satisfaction (qualitative)
 - Parent satisfaction (qualitative)
 
 ---
@@ -30,29 +30,29 @@ A password-protected web app where a nanny can log what a baby/toddler eats thro
 
 | User | Role | Tech comfort |
 |------|------|--------------|
-| Nanny | Logs meals daily | Low — Facebook/YouTube level |
+| Caregiver | Logs meals daily | Low — Facebook/YouTube level |
 | Parent | Reviews summaries, adjusts goals | Moderate |
 
 ---
 
 ## User Objectives
 
-### Nanny
-- **Confidence & clarity** — I can prep all of baby's meals in under 5 minutes, or asynchronously during nap time
-- **Parent approval** — I have the parent's sign-off on what I feed their child
-- **Safety confidence** — I'm confident in food safety, minimal choking risk, and zero allergy risk
+### Caregiver
+- **Confidence & clarity** — Prep all of the child's meals in under 5 minutes, or asynchronously during nap time
+- **Parent approval** — Clear sign-off from the parent on what gets fed
+- **Safety confidence** — Confidence in food safety, minimal choking risk, and zero allergy risk
 - **Effortless tool** — The app is as easy to use as writing it down by hand
 
 ### Parent
-- **Time back** — I'm no longer managing the nanny on snack selection
-- **Picky eater prevention** — My child gets variety and I get new food ideas
-- **Health assurance** — I know my child's nutritional needs are being met
+- **Time back** — No longer coordinating with the caregiver on every snack decision
+- **Picky eater prevention** — The child gets variety, and new food ideas surface automatically
+- **Health assurance** — Confidence that the child's nutritional needs are being met
 
 ---
 
 ## Core Features
 
-### 1. Meal Logging (nanny-facing)
+### 1. Meal Logging (caregiver-facing)
 - Big, friendly input area — type or use phone mic to dictate
 - Log: what was eaten + approximate amount + time
 - Confirm with one tap — no complicated forms
@@ -73,7 +73,7 @@ A password-protected web app where a nanny can log what a baby/toddler eats thro
 ### 4. Nutrition Gap Analysis
 - Compare actual intake vs. age-appropriate daily goals
 - Flag nutrients that are consistently under-served
-- Tailored to child's known dietary restrictions
+- Tailored to the child's known dietary restrictions
 
 ### 5. Food Recommendations
 - Suggest specific foods to fill nutrient gaps
@@ -85,7 +85,7 @@ A password-protected web app where a nanny can log what a baby/toddler eats thro
 ## UX Principles
 
 - **Facebook/YouTube-level simplicity** — big buttons, large text, friendly icons
-- **Mobile-first** — nanny will use her phone
+- **Mobile-first** — the caregiver logs from a phone
 - **Voice-friendly** — native browser speech-to-text on the input field
 - **No training required** — self-explanatory at a glance
 - **Forgiving** — fuzzy food matching, no strict formats required
@@ -99,7 +99,7 @@ A password-protected web app where a nanny can log what a baby/toddler eats thro
 | Frontend | Next.js (React) | Vercel-native, great mobile UX |
 | Backend / API | Next.js API routes | Keep it simple, same deploy |
 | Database | Supabase (Postgres) | Free tier, real-time, easy auth |
-| Auth | Supabase Auth (password) | Simple email+password for nanny |
+| Auth | Supabase Auth (password) | Simple email+password for the caregiver |
 | Nutrition data | USDA FoodData Central API | Free, comprehensive |
 | Deployment | Vercel | Free tier, zero-config |
 | Voice input | Web Speech API (browser-native) | No extra cost or service |
@@ -119,7 +119,7 @@ At the end of each phase, both Claude and the parent complete the same review in
 - Which metric improved most? Which least?
 
 **2. User Objectives Grade** *(A–F per objective)*
-- Nanny: confidence & clarity / parent approval / safety confidence / tool ease
+- Caregiver: confidence & clarity / parent approval / safety confidence / tool ease
 - Parent: time back / picky eater prevention / health assurance
 
 **3. Site Performance**
@@ -135,7 +135,7 @@ At the end of each phase, both Claude and the parent complete the same review in
 
 ### How It Works
 - Claude opens the deployed Vercel URL via Chrome, tests key flows (log a meal, view dashboard, check recommendations), reads console errors, and assesses mobile viewport
-- Parent completes the same review from real usage on their phone
+- The parent completes the same review from real usage on a phone
 - We compare and use gaps to prioritize the next phase
 
 ---
@@ -145,5 +145,5 @@ At the end of each phase, both Claude and the parent complete the same review in
 | Date | Decision | Rationale |
 |------|----------|-----------|
 | 2026-02-27 | Use Next.js + Supabase over Flask + SQLite | Enables Vercel deploy, cloud DB, built-in auth |
-| 2026-02-27 | Mobile-first, Facebook-style UX | Nanny is tech-casual, uses phone |
+| 2026-02-27 | Mobile-first, Facebook-style UX | Caregiver is tech-casual, logs from a phone |
 | 2026-02-27 | Web Speech API for dictation | Browser-native, no extra cost |

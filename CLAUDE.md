@@ -41,7 +41,11 @@ Liz has strong visual taste. Don't default to safe/generic aesthetics.
 ## morning-brief sync checklist
 
 When syncing `morning-brief/` from the private version:
-1. Diff the two `morning-brief.py` files — copy the private version over
+1. Diff the two `morning-brief.py` files — copy the private version over.
+   The private one moved to `automation/briefs/morning-brief.py` on 2026-07-29;
+   the public showcase copy deliberately keeps the old flat `automation/` layout,
+   so this is a content sync, not a path sync. Do not restructure the public copy
+   to match.
 2. Replace hardcoded personal paths with `Path.cwd()` or env var defaults
 3. Replace any personal email addresses with `your-email@gmail.com` placeholders
 4. Replace personal task list names (e.g. "Liz's list") with generic ones (e.g. "My list")
