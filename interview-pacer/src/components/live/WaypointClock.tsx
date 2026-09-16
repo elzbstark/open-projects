@@ -48,23 +48,31 @@ export function WaypointClock({
       ? {
           className: 'bg-red-950/40 border-red-800 text-red-300 animate-subtle-pulse',
           text: `Behind — should be ${targetIndex - activeIndex} section${targetIndex - activeIndex > 1 ? 's' : ''} ahead`,
+          checks: ['Take a pause', 'Ensure you have a structure'],
         }
       : diff > 0
       ? {
           className: 'bg-green-950/30 border-green-800 text-green-300',
           text: 'Ahead of pace',
+          checks: null,
         }
       : {
           className: 'bg-gray-800/50 border-gray-700 text-gray-500',
           text: 'On pace',
+          checks: null,
         };
 
   return (
     <div className="flex-1 flex flex-col min-w-0">
       <div
-        className={`mx-8 mt-6 px-4 py-2 text-center text-xs font-bold uppercase tracking-widest rounded-lg border transition-colors duration-1000 ${banner.className}`}
+        className={`mx-8 mt-6 px-4 py-2 text-center rounded-lg border transition-colors duration-1000 ${banner.className}`}
       >
-        {banner.text}
+        <p className="text-xs font-bold uppercase tracking-widest">{banner.text}</p>
+        {banner.checks && (
+          <p className="mt-1 text-[11px] font-semibold normal-case tracking-normal opacity-90">
+            {banner.checks.join('   ·   ')}
+          </p>
+        )}
       </div>
 
       <div className="flex-1 flex flex-col items-center justify-center gap-1 px-8">
