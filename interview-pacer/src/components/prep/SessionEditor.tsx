@@ -64,11 +64,6 @@ export function SessionEditor({ session, onSave, onCreate, templates }: SessionE
               Practice
             </button>
           </div>
-          <p className="text-xs text-gray-500 mt-1">
-            {sessionType === 'delivery'
-              ? 'Pre-written answers — pace against the waypoint clock in the sidebar.'
-              : 'Outline or questions only — generate answers live in full-screen mode.'}
-          </p>
         </div>
 
         <div>
