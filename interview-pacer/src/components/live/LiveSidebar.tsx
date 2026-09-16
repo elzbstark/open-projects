@@ -5,6 +5,7 @@ import { useKeyboardShortcuts } from '../../hooks/useKeyboardShortcuts';
 import { TotalProgressBar } from './TotalProgressBar';
 import { SectionCard } from './SectionCard';
 import { Controls } from './Controls';
+import { WaypointClock } from './WaypointClock';
 
 interface LiveSidebarProps {
   session: Session;
@@ -21,11 +22,6 @@ export function LiveSidebar({ session, onExit }: LiveSidebarProps) {
     prevSection,
     reset,
   } = useTimer(session.sections);
-
-  const [sectionNotes, setSectionNotes] = useState<string[]>(
-    session.sections.map((s) => s.notes || '')
-  );
-  const notesRef = useRef<HTMLTextAreaElement>(null);
 
   // Track which sections are manually collapsed; active section starts expanded
   const [collapsedSections, setCollapsedSections] = useState<Set<number>>(
@@ -104,11 +100,6 @@ export function LiveSidebar({ session, onExit }: LiveSidebarProps) {
     }
   }, [timer.activeSectionIndex]);
 
-  const getUpdatedSections = useCallback(() =>
-    session.sections.map((s, i) => ({ ...s, notes: sectionNotes[i] || '' })),
-    [session.sections, sectionNotes]
-  );
-
   const handleEscape = useCallback(() => {
     toggleCollapse(timer.activeSectionIndex);
   }, [timer.activeSectionIndex]);
@@ -129,7 +120,7 @@ export function LiveSidebar({ session, onExit }: LiveSidebarProps) {
         <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
           <div className="flex items-center gap-3">
             <button
-              onClick={() => onExit(getUpdatedSections())}
+              onClick={() => onExit(session.sections)}
               className="text-gray-400 hover:text-white text-sm transition-colors"
             >
               ← Back
@@ -139,7 +130,7 @@ export function LiveSidebar({ session, onExit }: LiveSidebarProps) {
             </span>
           </div>
           <button
-            onClick={() => onExit(getUpdatedSections(), new Date().toISOString())}
+            onClick={() => onExit(session.sections, new Date().toISOString())}
             className="px-3 py-1 text-xs border border-green-700 text-green-400 hover:bg-green-900/30 rounded transition-colors shrink-0"
           >
             Mark complete
@@ -182,23 +173,15 @@ export function LiveSidebar({ session, onExit }: LiveSidebarProps) {
         />
       </div>
 
-      {/* Right panel: notes */}
-      <div className="flex-1 flex flex-col px-8 py-6">
-        <p className="text-xs text-gray-500 uppercase tracking-wider mb-3">
-          Notes — {session.sections[timer.activeSectionIndex]?.name}
-        </p>
-        <textarea
-          ref={notesRef}
-          value={sectionNotes[timer.activeSectionIndex] || ''}
-          onChange={(e) => {
-            const updated = [...sectionNotes];
-            updated[timer.activeSectionIndex] = e.target.value;
-            setSectionNotes(updated);
-          }}
-          placeholder="Type or dictate notes here..."
-          className="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white text-base leading-7 focus:outline-none focus:border-blue-500 resize-none"
-        />
-      </div>
+      {/* Right panel: waypoint clock */}
+      <WaypointClock
+        sections={session.sections}
+        activeIndex={timer.activeSectionIndex}
+        elapsed={timer.sectionElapsed[timer.activeSectionIndex] || 0}
+        totalElapsed={timer.totalElapsed}
+        totalBudget={totalBudget}
+        paceStatus={getPaceStatus(timer.activeSectionIndex)}
+      />
     </div>
   );
 }

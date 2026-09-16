@@ -31,7 +31,7 @@ export function SessionList({ sessions, selectedId, onSelect, onLaunch, onDelete
     <div className="space-y-1">
       {sorted.map((s) => {
         const isActive = !!s.startedAt;
-        const subtitle = [s.templateName, s.sessionType === 'improv' ? 'Improv' : null]
+        const subtitle = [s.templateName, s.sessionType === 'improv' ? 'Practice' : null]
           .filter(Boolean)
           .join(' · ');
 

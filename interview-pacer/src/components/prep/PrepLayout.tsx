@@ -179,7 +179,7 @@ export function PrepLayout({ onLaunchSession }: PrepLayoutProps) {
                       <div className="min-w-0">
                         <span className="text-sm text-gray-500 truncate block">{s.companyName}: {s.name}</span>
                         <span className="text-xs text-gray-600">
-                          {[s.templateName, s.sessionType === 'improv' ? 'Improv' : null].filter(Boolean).join(' · ')}
+                          {[s.templateName, s.sessionType === 'improv' ? 'Practice' : null].filter(Boolean).join(' · ')}
                           {' · '}
                           {new Date(s.completedAt!).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                         </span>

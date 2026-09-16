@@ -51,7 +51,7 @@ export function SessionEditor({ session, onSave, onCreate, templates }: SessionE
                   : 'bg-gray-800 text-gray-400 border border-gray-700 hover:border-gray-500'
               }`}
             >
-              Delivery (scripted)
+              Real Interview
             </button>
             <button
               onClick={() => setSessionType('improv')}
@@ -61,12 +61,12 @@ export function SessionEditor({ session, onSave, onCreate, templates }: SessionE
                   : 'bg-gray-800 text-gray-400 border border-gray-700 hover:border-gray-500'
               }`}
             >
-              Improv (outline only)
+              Practice
             </button>
           </div>
           <p className="text-xs text-gray-500 mt-1">
             {sessionType === 'delivery'
-              ? 'Pre-written answers — practice pacing and delivery in sidebar.'
+              ? 'Pre-written answers — pace against the waypoint clock in the sidebar.'
               : 'Outline or questions only — generate answers live in full-screen mode.'}
           </p>
         </div>
@@ -121,7 +121,7 @@ export function SessionEditor({ session, onSave, onCreate, templates }: SessionE
           {session.companyName}: {session.name}
         </h2>
         <p className="text-xs text-gray-500 mt-0.5">
-          {[session.templateName, isImprov ? 'Improv' : null].filter(Boolean).join(' · ')}
+          {[session.templateName, isImprov ? 'Practice' : null].filter(Boolean).join(' · ')}
         </p>
       </div>
 
