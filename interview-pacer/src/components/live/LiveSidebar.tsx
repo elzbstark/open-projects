@@ -16,6 +16,8 @@ export function LiveSidebar({ session, onExit }: LiveSidebarProps) {
   const {
     timer,
     totalBudget,
+    targetIndex,
+    isSeverelyBehind,
     getPaceStatus,
     togglePause,
     nextSection,
@@ -155,7 +157,11 @@ export function LiveSidebar({ session, onExit }: LiveSidebarProps) {
                 activeIndex={timer.activeSectionIndex}
                 elapsed={timer.sectionElapsed[i] || 0}
                 paceStatus={getPaceStatus(i)}
-                nextSectionName={session.sections[i + 1]?.name}
+                nextSectionName={
+                  i === timer.activeSectionIndex && targetIndex > i
+                    ? session.sections[targetIndex]?.name
+                    : session.sections[i + 1]?.name
+                }
                 collapsed={collapsedSections.has(i)}
                 onToggleCollapse={() => toggleCollapse(i)}
               />
@@ -181,6 +187,8 @@ export function LiveSidebar({ session, onExit }: LiveSidebarProps) {
         totalElapsed={timer.totalElapsed}
         totalBudget={totalBudget}
         paceStatus={getPaceStatus(timer.activeSectionIndex)}
+        targetIndex={targetIndex}
+        isSeverelyBehind={isSeverelyBehind}
       />
     </div>
   );

@@ -16,6 +16,8 @@ export function ImprovLive({ session, onExit }: ImprovLiveProps) {
   const {
     timer,
     totalBudget,
+    totalRemaining,
+    isSeverelyBehind,
     getPaceStatus,
     togglePause,
     nextSection,
@@ -159,14 +161,20 @@ export function ImprovLive({ session, onExit }: ImprovLiveProps) {
               <h2 className="text-xl font-bold text-white uppercase tracking-wide">
                 {activeSection.name}
               </h2>
-              <span className={`text-sm font-mono ${paceStatusColor(paceStatus)}`}>
-                {formatTime(elapsed)} / {formatTime(activeSection.durationSeconds)}
-                {paceStatus !== 'on-pace' && (
-                  <span className="ml-2 text-xs opacity-75">
-                    {paceStatus === 'warning' ? 'wrapping up' : paceStatus === 'over-time' ? 'over time' : 'move on'}
-                  </span>
-                )}
-              </span>
+              {isSeverelyBehind ? (
+                <span className="text-sm font-mono font-bold text-red-400">
+                  Skip ahead: {formatTime(totalRemaining)} left
+                </span>
+              ) : (
+                <span className={`text-sm font-mono ${paceStatusColor(paceStatus)}`}>
+                  {formatTime(elapsed)} / {formatTime(activeSection.durationSeconds)}
+                  {paceStatus !== 'on-pace' && (
+                    <span className="ml-2 text-xs opacity-75">
+                      {paceStatus === 'warning' ? 'wrapping up' : paceStatus === 'over-time' ? 'over time' : 'move on'}
+                    </span>
+                  )}
+                </span>
+              )}
             </div>
             <SectionTimerBar
               elapsed={elapsed}

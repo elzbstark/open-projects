@@ -8,6 +8,8 @@ interface WaypointClockProps {
   totalElapsed: number;
   totalBudget: number;
   paceStatus: PaceStatus;
+  targetIndex: number;
+  isSeverelyBehind: boolean;
 }
 
 const countdownColors: Record<PaceStatus, string> = {
@@ -17,17 +19,6 @@ const countdownColors: Record<PaceStatus, string> = {
   'move-on': 'text-red-300',
 };
 
-// Where a perfectly-paced run would be right now, based on elapsed time alone —
-// independent of which section she's actually navigated to.
-function getTargetIndex(sections: SessionSection[], totalElapsed: number): number {
-  let cumulative = 0;
-  for (let i = 0; i < sections.length; i++) {
-    cumulative += sections[i].durationSeconds;
-    if (totalElapsed < cumulative) return i;
-  }
-  return sections.length - 1;
-}
-
 export function WaypointClock({
   sections,
   activeIndex,
@@ -35,12 +26,17 @@ export function WaypointClock({
   totalElapsed,
   totalBudget,
   paceStatus,
+  targetIndex,
+  isSeverelyBehind,
 }: WaypointClockProps) {
-  const targetIndex = getTargetIndex(sections, totalElapsed);
   const activeSection = sections[activeIndex];
   const targetSection = sections[targetIndex];
-  const sectionRemaining = activeSection.durationSeconds - elapsed;
   const totalRemaining = totalBudget - totalElapsed;
+  // Cap the section countdown at whatever's actually left in the full interview budget,
+  // so skipping to a section with a bigger allotment than remains can't show more time
+  // than you actually have.
+  const sectionRemaining = Math.min(activeSection.durationSeconds - elapsed, totalRemaining);
+  const effectivePaceStatus: PaceStatus = totalRemaining <= 0 ? 'move-on' : paceStatus;
   const diff = activeIndex - targetIndex;
 
   const banner =
@@ -76,13 +72,15 @@ export function WaypointClock({
       </div>
 
       <div className="flex-1 flex flex-col items-center justify-center gap-1 px-8">
-        <p className="text-xs text-gray-500 uppercase tracking-widest">Time in section</p>
+        <p className="text-xs text-gray-500 uppercase tracking-widest">
+          {isSeverelyBehind ? 'Time left in interview' : 'Time in section'}
+        </p>
 
         <div
-          className={`font-mono font-bold tabular-nums leading-none transition-colors duration-1000 ${countdownColors[paceStatus]}`}
+          className={`font-mono font-bold tabular-nums leading-none transition-colors duration-1000 ${countdownColors[effectivePaceStatus]}`}
           style={{ fontSize: 'clamp(64px, 9vw, 140px)' }}
         >
-          {formatTime(sectionRemaining)}
+          {formatTime(isSeverelyBehind ? totalRemaining : sectionRemaining)}
         </div>
 
         <span className="text-xs text-gray-500 uppercase tracking-widest mt-4">You should be on</span>
@@ -90,9 +88,11 @@ export function WaypointClock({
           {targetSection.name}
         </p>
 
-        <p className="text-xs text-gray-600 mt-3">
-          {totalRemaining <= 0 ? 'Past the full interview budget' : `${formatTime(totalRemaining)} left in the interview`}
-        </p>
+        {!isSeverelyBehind && (
+          <p className="text-xs text-gray-600 mt-3">
+            {totalRemaining <= 0 ? 'Past the full interview budget' : `${formatTime(totalRemaining)} left in the interview`}
+          </p>
+        )}
       </div>
     </div>
   );

@@ -9,6 +9,17 @@ function getPaceStatus(elapsed: number, budget: number): PaceStatus {
   return 'on-pace';
 }
 
+// Where a perfectly-paced run would be right now, based on elapsed time alone —
+// independent of which section she's actually navigated to.
+function getTargetIndex(sections: SessionSection[], totalElapsed: number): number {
+  let cumulative = 0;
+  for (let i = 0; i < sections.length; i++) {
+    cumulative += sections[i].durationSeconds;
+    if (totalElapsed < cumulative) return i;
+  }
+  return sections.length - 1;
+}
+
 const TICK_MS = 250;
 
 export function useTimer(sections: SessionSection[]) {
@@ -183,16 +194,27 @@ export function useTimer(sections: SessionSection[]) {
 
   const totalBudget = sections.reduce((s, sec) => s + sec.durationSeconds, 0);
   const totalRemaining = Math.max(0, totalBudget - timer.totalElapsed);
+  const targetIndex = getTargetIndex(sections, timer.totalElapsed);
+  const sectionsBehind = targetIndex - timer.activeSectionIndex;
+  // More than a section behind, with under half the interview left to catch up in —
+  // past the point where "wrap this section up" is realistic advice.
+  const isSeverelyBehind = sectionsBehind > 1 && totalRemaining < totalBudget / 2;
 
   return {
     timer,
     totalBudget,
     totalRemaining,
-    getPaceStatus: (index: number) =>
-      getPaceStatus(
+    targetIndex,
+    isSeverelyBehind,
+    getPaceStatus: (index: number) => {
+      // Once the whole interview's budget is gone, every section is "move on" —
+      // a section that just started still looks locally on-pace otherwise.
+      if (timer.totalElapsed >= totalBudget) return 'move-on';
+      return getPaceStatus(
         timer.sectionElapsed[index] || 0,
         sections[index]?.durationSeconds || 1
-      ),
+      );
+    },
     start,
     pause,
     togglePause,
