@@ -3,6 +3,7 @@ import type { Session, SessionSection, PaceStatus } from '../../types';
 import { useTimer } from '../../hooks/useTimer';
 import { useKeyboardShortcuts } from '../../hooks/useKeyboardShortcuts';
 import { SectionTimerBar } from './SectionTimerBar';
+import { SectionHint } from './SectionHint';
 import { Controls } from './Controls';
 import { MarkdownRenderer } from '../shared/MarkdownRenderer';
 import { formatTime } from '../shared/TimeDisplay';
@@ -182,6 +183,8 @@ export function ImprovLive({ session, onExit }: ImprovLiveProps) {
               paceStatus={paceStatus}
             />
           </div>
+
+          <SectionHint templateSectionId={activeSection.templateSectionId} />
 
           {/* Outline (dimmed) */}
           {activeSection.content && (

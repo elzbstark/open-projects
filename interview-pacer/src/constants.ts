@@ -124,3 +124,9 @@ export const DEFAULT_TEMPLATES: Template[] = [
     ],
   },
 ];
+
+// Stuck-hints shown on the active section, keyed by template section id so
+// sessions created before a hint existed still get it.
+export const SECTION_HINTS: Record<string, string> = {
+  'ps30-audience': 'If stuck, try "frequency vs trust" or "personas on 1 axis"',
+};

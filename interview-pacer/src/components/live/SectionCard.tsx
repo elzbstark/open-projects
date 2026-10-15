@@ -1,6 +1,7 @@
 import type { SessionSection, PaceStatus } from '../../types';
 import { SectionTimerBar } from './SectionTimerBar';
 import { MoveOnNudge } from './MoveOnNudge';
+import { SectionHint } from './SectionHint';
 import { MarkdownRenderer } from '../shared/MarkdownRenderer';
 import { formatTime } from '../shared/TimeDisplay';
 
@@ -91,6 +92,13 @@ export function SectionCard({
             budget={section.durationSeconds}
             paceStatus={paceStatus}
           />
+        </div>
+      )}
+
+      {/* Stuck-hint for the active section */}
+      {isActive && (
+        <div className="px-3 pb-2 pt-1">
+          <SectionHint templateSectionId={section.templateSectionId} />
         </div>
       )}
 
