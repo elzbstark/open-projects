@@ -1,6 +1,11 @@
 import { useState, useRef } from 'react';
 import type { Session, Template } from '../../types';
 import { parseMarkdownSections, mapToTemplateSections } from './ContentParser';
+import { FocusPreview } from './FocusPreview';
+import { FOCUS_COPY } from './focusCopy';
+
+// Past this, a section's text stops being glanceable in the 400px live sidebar.
+const SIDEBAR_CUE_LIMIT = 300;
 
 interface SessionEditorProps {
   session: Session | null;
@@ -41,28 +46,31 @@ export function SessionEditor({ session, onSave, onCreate, templates }: SessionE
         </div>
 
         <div>
-          <label className="text-xs text-gray-400 block mb-2">Session Type</label>
-          <div className="flex gap-2">
-            <button
-              onClick={() => setSessionType('delivery')}
-              className={`px-3 py-1.5 text-sm rounded transition-colors ${
-                sessionType === 'delivery'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-800 text-gray-400 border border-gray-700 hover:border-gray-500'
-              }`}
-            >
-              Real Interview
-            </button>
-            <button
-              onClick={() => setSessionType('improv')}
-              className={`px-3 py-1.5 text-sm rounded transition-colors ${
-                sessionType === 'improv'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-800 text-gray-400 border border-gray-700 hover:border-gray-500'
-              }`}
-            >
-              Practice
-            </button>
+          <label className="text-xs text-gray-400 block mb-2">Focus</label>
+          <div className="grid grid-cols-2 gap-2">
+            {(['delivery', 'improv'] as const).map((focus) => {
+              const active = sessionType === focus;
+              return (
+                <button
+                  key={focus}
+                  onClick={() => setSessionType(focus)}
+                  aria-pressed={active}
+                  className={`p-2 text-left rounded transition-colors space-y-2 ${
+                    active
+                      ? 'bg-blue-600/20 border border-blue-500'
+                      : 'bg-gray-800 border border-gray-700 hover:border-gray-500'
+                  }`}
+                >
+                  <FocusPreview focus={focus} active={active} />
+                  <div>
+                    <div className={`text-sm font-medium ${active ? 'text-white' : 'text-gray-300'}`}>
+                      {FOCUS_COPY[focus].label}
+                    </div>
+                    <div className="text-xs text-gray-400 leading-snug mt-0.5">{FOCUS_COPY[focus].blurb}</div>
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -116,7 +124,19 @@ export function SessionEditor({ session, onSave, onCreate, templates }: SessionE
           {session.companyName}: {session.name}
         </h2>
         <p className="text-xs text-gray-500 mt-0.5">
-          {[session.templateName, isImprov ? 'Practice' : null].filter(Boolean).join(' · ')}
+          {[session.templateName, `${FOCUS_COPY[isImprov ? 'improv' : 'delivery'].label} focus`].join(' · ')}
+        </p>
+      </div>
+
+      {/* Where this text shows up live */}
+      <div className="flex items-center gap-3 p-2 rounded border border-gray-700 bg-gray-800/50">
+        <div className="w-28 shrink-0">
+          <FocusPreview focus={isImprov ? 'improv' : 'delivery'} active />
+        </div>
+        <p className="text-xs text-gray-400 leading-snug">
+          {isImprov
+            ? 'Live, each section shows its outline dimmed above a notes box. Write the questions you want to answer, then type your answer as you go.'
+            : 'Live, this text shows in the narrow sidebar next to the clock. Write short cues you can glance at, not a script.'}
         </p>
       </div>
 
@@ -202,9 +222,14 @@ export function SessionEditor({ session, onSave, onCreate, templates }: SessionE
                   updatedAt: new Date().toISOString(),
                 });
               }}
-              placeholder={isImprov ? `Outline / questions for ${section.name}...` : `Content for ${section.name}...`}
+              placeholder={isImprov ? `Outline / questions for ${section.name}...` : `Short cues for ${section.name}, shown in the sidebar...`}
               className="w-full h-24 px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white text-sm font-mono focus:outline-none focus:border-blue-500 resize-y"
             />
+            {!isImprov && section.content.length > SIDEBAR_CUE_LIMIT && (
+              <p className="text-xs text-amber-400">
+                Long for the sidebar ({section.content.length} characters). Trim to cues you can read at a glance.
+              </p>
+            )}
             {/* Improv: show saved session notes for review/cleanup */}
             {isImprov && (
               <div>
