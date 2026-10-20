@@ -107,7 +107,7 @@ export function PrepLayout({ onLaunchSession }: PrepLayoutProps) {
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-white">Interview Pacer</h1>
           <p className="text-sm text-gray-400 mt-1">
-            Prepare your sessions, then launch Live Mode during interviews.
+            Practice makes perfect, but timing is everything.
           </p>
         </div>
 
