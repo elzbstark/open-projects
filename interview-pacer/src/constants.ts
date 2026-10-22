@@ -130,3 +130,13 @@ export const DEFAULT_TEMPLATES: Template[] = [
 export const SECTION_HINTS: Record<string, string> = {
   'ps30-audience': 'If stuck, try "frequency vs trust" or "personas on 1 axis"',
 };
+
+// "How to get on track" script, shown on demand when 2+ sections behind. Keyed by
+// the template section id you'd skip to, so it only appears in templates that have it.
+export const GET_ON_TRACK: Record<string, string[]> = {
+  'ps30-v1': [
+    'Say: "Give me a second to gather my thoughts."',
+    'Pause. Breathe. Look at the clock.',
+    'Ask: "Should we continue with this section, or skip to the MVP?"',
+  ],
+};

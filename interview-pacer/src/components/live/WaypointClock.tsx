@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import type { SessionSection, PaceStatus } from '../../types';
 import { formatTime } from '../shared/TimeDisplay';
+import { GET_ON_TRACK } from '../../constants';
 
 interface WaypointClockProps {
   sections: SessionSection[];
@@ -38,6 +40,14 @@ export function WaypointClock({
   const sectionRemaining = Math.min(activeSection.durationSeconds - elapsed, totalRemaining);
   const effectivePaceStatus: PaceStatus = totalRemaining <= 0 ? 'move-on' : paceStatus;
   const diff = activeIndex - targetIndex;
+  const [showOnTrack, setShowOnTrack] = useState(false);
+
+  // Only offered when 2+ sections behind and the skip-to section is still ahead of you.
+  const skipToIndex = sections.findIndex((s) => GET_ON_TRACK[s.templateSectionId]);
+  const onTrackSteps =
+    diff <= -2 && skipToIndex > activeIndex
+      ? GET_ON_TRACK[sections[skipToIndex].templateSectionId]
+      : null;
 
   const banner =
     diff < 0
@@ -70,6 +80,24 @@ export function WaypointClock({
           </p>
         )}
       </div>
+
+      {onTrackSteps && (
+        <div className="mx-8 mt-3 text-center">
+          <button
+            onClick={() => setShowOnTrack((v) => !v)}
+            className="text-xs font-bold px-4 py-1.5 rounded-full bg-amber-400 text-gray-950 hover:bg-amber-300 shadow"
+          >
+            {showOnTrack ? 'Hide' : 'How to get on track'}
+          </button>
+          {showOnTrack && (
+            <ol className="mt-2 text-left text-sm text-amber-100 space-y-1 list-decimal list-inside border-l-2 border-amber-400 bg-amber-950/30 px-4 py-2">
+              {onTrackSteps.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ol>
+          )}
+        </div>
+      )}
 
       <div className="flex-1 flex flex-col items-center justify-center gap-1 px-8">
         <p className="text-xs text-gray-500 uppercase tracking-widest">
