@@ -68,13 +68,13 @@ export const DEFAULT_TEMPLATES: Template[] = [
     totalMinutes: 30,
     isDefault: true,
     sections: [
-      sec('ps30-clarify',    'Clarify — scope + game plan',                  1),
-      sec('ps30-motivation', 'Motivation — why it matters + mission',        3),
-      sec('ps30-audience',   'Audience — segment → prioritize → persona',    5),
-      sec('ps30-problem',    'Problem — user journey → name the bottleneck', 6),
-      sec('ps30-solutions',  'Solutions — diverge → prioritize',             5),
-      sec('ps30-v1',         'V1 — define the build',                        7),
-      sec('ps30-close',      'Close — metric + guardrail + risk',            2),
+      sec('ps30-clarify',    'Clarify: scope + game plan',                              1),
+      sec('ps30-motivation', 'Goal: one sentence, "X wins if Y, so I optimize for Z"',  1),
+      sec('ps30-audience',   'Audience: 2-3 segments → pick → one-line persona',        4),
+      sec('ps30-problem',    'Problem: 2-3 pains → name the bottleneck',                4),
+      sec('ps30-solutions',  'Solutions: diverge → prioritize',                         5),
+      sec('ps30-v1',         'V1: restate the bottleneck, then demo the build',        10),
+      sec('ps30-close',      'Close: metric + guardrail + risk + monetization',         4),
     ],
   },
   {
@@ -128,7 +128,7 @@ export const DEFAULT_TEMPLATES: Template[] = [
 // Stuck-hints shown on the active section, keyed by template section id so
 // sessions created before a hint existed still get it.
 export const SECTION_HINTS: Record<string, string> = {
-  'ps30-audience': 'If stuck, try "frequency vs trust" or "personas on 1 axis"',
+  'ps30-audience': 'If stuck, split on one axis (e.g. frequency vs trust), pick one, name the person',
 };
 
 // "How to get on track" script, shown on demand when 2+ sections behind. Keyed by
