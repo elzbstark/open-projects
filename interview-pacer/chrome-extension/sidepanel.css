@@ -302,3 +302,84 @@ html, body {
 .hud.warning  .current-section-name { color: var(--yellow); }
 .hud.over-time .current-section-name { color: var(--red); }
 .hud.move-on  .current-section-name { color: var(--urgent); }
+
+/* ── Overall pace banner (mirrors the app's waypoint clock) ── */
+.pace-banner {
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  text-align: center;
+  background: rgba(31,41,55,0.5);
+  color: var(--dimmed);
+}
+
+.pace-banner.behind {
+  background: rgba(69,10,10,0.4);
+  border-color: #991b1b;
+  color: #fca5a5;
+  animation: subtle-pulse 2s ease-in-out infinite;
+}
+
+.pace-banner.ahead {
+  background: rgba(5,46,22,0.3);
+  border-color: #166534;
+  color: #86efac;
+}
+
+@keyframes subtle-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
+.banner-text {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.banner-checks {
+  margin-top: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.banner-checks:empty { display: none; }
+
+.btn-ontrack {
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border: none;
+  border-radius: 999px;
+  background: #fbbf24;
+  color: #030712;
+  cursor: pointer;
+}
+
+.btn-ontrack:hover { background: #fcd34d; }
+
+.ontrack-steps {
+  margin: 8px 0 0;
+  padding: 6px 10px 6px 26px;
+  text-align: left;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #fef3c7;
+  border-left: 2px solid #fbbf24;
+  background: rgba(69,26,3,0.3);
+}
+
+.target-row {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.target-name {
+  font-weight: 700;
+  color: #93c5fd;
+}
+
+.timer-elapsed.severe { color: var(--urgent); }

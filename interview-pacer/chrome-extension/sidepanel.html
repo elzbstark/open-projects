@@ -21,14 +21,22 @@
       <!-- Session label -->
       <div id="session-label" class="session-label"></div>
 
+      <!-- Overall pace: judged against the whole interview, not just this section -->
+      <div id="pace-banner" class="pace-banner">
+        <div id="banner-text" class="banner-text"></div>
+        <div id="banner-checks" class="banner-checks"></div>
+        <button id="btn-ontrack" class="btn-ontrack hidden">How to get on track</button>
+        <ol id="ontrack-steps" class="ontrack-steps hidden"></ol>
+      </div>
+
       <!-- Current section -->
       <div class="current-section-block">
         <div id="current-section-name" class="current-section-name"></div>
         <div class="timer-row">
           <span id="section-elapsed" class="timer-elapsed"></span>
-          <span class="timer-sep">/</span>
           <span id="section-budget" class="timer-budget"></span>
         </div>
+        <div class="target-row">You should be on <span id="target-name" class="target-name"></span></div>
         <div id="pace-bar-wrap" class="progress-bar-wrap">
           <div id="pace-bar" class="progress-bar"></div>
         </div>

@@ -6,6 +6,7 @@ import { TotalProgressBar } from './TotalProgressBar';
 import { SectionCard } from './SectionCard';
 import { Controls } from './Controls';
 import { WaypointClock } from './WaypointClock';
+import { GET_ON_TRACK } from '../../constants';
 
 interface LiveSidebarProps {
   session: Session;
@@ -61,6 +62,7 @@ export function LiveSidebar({ session, onExit }: LiveSidebarProps) {
       sections: session.sections.map((s) => ({
         name: s.name,
         durationSeconds: s.durationSeconds,
+        onTrack: GET_ON_TRACK[s.templateSectionId] ?? null,
       })),
       totalBudget,
       updatedAt: Date.now(),

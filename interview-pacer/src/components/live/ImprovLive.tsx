@@ -7,6 +7,7 @@ import { SectionHint } from './SectionHint';
 import { Controls } from './Controls';
 import { MarkdownRenderer } from '../shared/MarkdownRenderer';
 import { formatTime } from '../shared/TimeDisplay';
+import { GET_ON_TRACK } from '../../constants';
 
 interface ImprovLiveProps {
   session: Session;
@@ -44,6 +45,7 @@ export function ImprovLive({ session, onExit }: ImprovLiveProps) {
         name: s.name,
         durationSeconds: s.durationSeconds,
         content: s.content || '',
+        onTrack: GET_ON_TRACK[s.templateSectionId] ?? null,
       })),
       totalBudget,
       updatedAt: Date.now(),

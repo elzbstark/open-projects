@@ -14,6 +14,12 @@ const elPaceBadge  = document.getElementById('pace-badge');
 const elTotalBar   = document.getElementById('total-bar');
 const elTotalTimer = document.getElementById('total-timer');
 const elSectionList = document.getElementById('section-list');
+const elBanner     = document.getElementById('pace-banner');
+const elBannerText = document.getElementById('banner-text');
+const elBannerChecks = document.getElementById('banner-checks');
+const btnOnTrack   = document.getElementById('btn-ontrack');
+const elOnTrackSteps = document.getElementById('ontrack-steps');
+const elTargetName = document.getElementById('target-name');
 const btnPrev      = document.getElementById('btn-prev');
 const btnPlayPause = document.getElementById('btn-playpause');
 const btnNext      = document.getElementById('btn-next');
@@ -56,6 +62,17 @@ function getPaceStatus(elapsed, budget) {
   return 'on-pace';
 }
 
+// Same as useTimer.getTargetIndex in the app: where a perfectly-paced run would be
+// right now, from total elapsed alone.
+function getTargetIndex(sections, totalElapsed) {
+  let cumulative = 0;
+  for (let i = 0; i < sections.length; i++) {
+    cumulative += sections[i].durationSeconds;
+    if (totalElapsed < cumulative) return i;
+  }
+  return sections.length - 1;
+}
+
 function paceLabel(status) {
   return { 'on-pace': 'On Pace', warning: 'Warning', 'over-time': 'Over Time', 'move-on': 'Move On' }[status] || status;
 }
@@ -81,13 +98,33 @@ function render(state) {
   const activeElapsed = sectionElapsed[activeSectionIndex] || 0;
   const activeBudget  = sections[activeSectionIndex]?.durationSeconds || 1;
   const activeSection = sections[activeSectionIndex];
-  const paceStatus    = getPaceStatus(activeElapsed, activeBudget);
   const totalElapsed  = sectionElapsed.reduce((a, b) => a + b, 0);
+  const totalRemaining = Math.max(0, totalBudget - totalElapsed);
+  // Once the whole interview's budget is gone, a freshly started section still
+  // looks locally on-pace, so force move-on (same rule as the app).
+  const paceStatus    = totalElapsed >= totalBudget ? 'move-on' : getPaceStatus(activeElapsed, activeBudget);
+  const targetIndex   = getTargetIndex(sections, totalElapsed);
+  const sectionsBehind = targetIndex - activeSectionIndex;
+  // More than a section behind with under half the interview left: the section's own
+  // allotment is no longer real, so show the interview's time left instead.
+  const isSeverelyBehind = sectionsBehind > 1 && totalRemaining < totalBudget / 2;
 
   elLabel.textContent = [companyName, templateName].filter(Boolean).join(' — ');
   elSectName.textContent = activeSection?.name || '';
-  elElapsed.textContent  = formatTime(activeElapsed);
-  elBudget.textContent   = formatTime(activeBudget);
+  elTargetName.textContent = sections[targetIndex]?.name || '';
+
+  // Count down, capped at what's left in the interview, so a section never
+  // promises more time than you actually have.
+  if (isSeverelyBehind) {
+    elElapsed.textContent = formatTime(totalRemaining);
+    elBudget.textContent  = 'left in interview · skip ahead';
+  } else {
+    elElapsed.textContent = formatTime(Math.min(activeBudget - activeElapsed, totalRemaining));
+    elBudget.textContent  = 'left in section';
+  }
+  elElapsed.classList.toggle('severe', isSeverelyBehind);
+
+  renderBanner(sections, activeSectionIndex, targetIndex, sectionsBehind);
 
   const paceRatio = clamp(activeElapsed / activeBudget, 0, 1.5);
   elPaceBar.style.width = `${clamp(paceRatio * 100, 0, 100)}%`;
@@ -103,10 +140,45 @@ function render(state) {
   elTotalBar.style.background = totalRatio > 0.9 ? 'var(--red)' : 'var(--green)';
   elTotalTimer.textContent = `${formatTime(totalElapsed)} / ${formatTime(totalBudget)}`;
 
-  renderSectionList(sections, sectionElapsed, activeSectionIndex);
+  renderSectionList(sections, sectionElapsed, activeSectionIndex, paceStatus);
 
   lastIsRunning = isRunning;
   btnPlayPause.textContent = isRunning ? '⏸' : '▶';
+}
+
+// Toggled by the "How to get on track" button; survives the once-a-second re-render.
+let showOnTrack = false;
+btnOnTrack.addEventListener('click', () => { showOnTrack = !showOnTrack; });
+
+function renderBanner(sections, activeIndex, targetIndex, sectionsBehind) {
+  if (sectionsBehind > 0) {
+    elBanner.className = 'pace-banner behind';
+    elBannerText.textContent = `Behind: should be ${sectionsBehind} section${sectionsBehind > 1 ? 's' : ''} ahead`;
+    elBannerChecks.textContent = 'Take a pause · Ensure you have a structure';
+  } else if (sectionsBehind < 0) {
+    elBanner.className = 'pace-banner ahead';
+    elBannerText.textContent = 'Ahead of pace';
+    elBannerChecks.textContent = '';
+  } else {
+    elBanner.className = 'pace-banner';
+    elBannerText.textContent = 'On pace';
+    elBannerChecks.textContent = '';
+  }
+
+  // Recovery script comes from the app (GET_ON_TRACK), attached to the section you'd
+  // skip to. Offered only when 2+ sections behind and that section is still ahead.
+  const skipToIndex = sections.findIndex((s) => s.onTrack);
+  const steps = sectionsBehind >= 2 && skipToIndex > activeIndex ? sections[skipToIndex].onTrack : null;
+  btnOnTrack.classList.toggle('hidden', !steps);
+  if (!steps) showOnTrack = false;
+  btnOnTrack.textContent = showOnTrack ? 'Hide' : 'How to get on track';
+  elOnTrackSteps.classList.toggle('hidden', !(steps && showOnTrack));
+  elOnTrackSteps.innerHTML = '';
+  (steps || []).forEach((step) => {
+    const li = document.createElement('li');
+    li.textContent = step;
+    elOnTrackSteps.appendChild(li);
+  });
 }
 
 // Track which sections are expanded in the extension panel
@@ -116,17 +188,19 @@ const expandedSections = new Set();
 let lastSections = [];
 let lastSectionElapsed = [];
 let lastActiveIndex = 0;
+let lastPaceStatus = 'on-pace';
 
-function renderSectionList(sections, sectionElapsed, activeIndex) {
+function renderSectionList(sections, sectionElapsed, activeIndex, activePaceStatus) {
   lastSections = sections;
   lastSectionElapsed = sectionElapsed;
   lastActiveIndex = activeIndex;
+  lastPaceStatus = activePaceStatus;
 
   elSectionList.innerHTML = '';
   sections.forEach((sec, i) => {
     const elapsed = sectionElapsed[i] || 0;
     const status  = i < activeIndex ? 'completed' : i === activeIndex ? 'active' : 'upcoming';
-    const pStatus = getPaceStatus(elapsed, sec.durationSeconds);
+    const pStatus = i === activeIndex ? activePaceStatus : getPaceStatus(elapsed, sec.durationSeconds);
     const isExpanded = expandedSections.has(i);
 
     // Wrapper includes row + optional content
@@ -177,7 +251,7 @@ function renderSectionList(sections, sectionElapsed, activeIndex) {
         } else {
           expandedSections.add(i);
         }
-        renderSectionList(lastSections, lastSectionElapsed, lastActiveIndex);
+        renderSectionList(lastSections, lastSectionElapsed, lastActiveIndex, lastPaceStatus);
       });
     }
 
