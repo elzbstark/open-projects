@@ -103,10 +103,27 @@ export const DEFAULT_TEMPLATES: Template[] = [
     sections: [
       sec('strat25-clarify',    'Clarify',                                                1),
       sec('strat25-hypothesis', 'Hypothesis',                                             4),
-      sec('strat25-why',        'Why — mission/users/size',                               5),
+      sec('strat25-why',        'Why — mission/users/size, how we make money',             5),
       sec('strat25-whyus',      'Why Us — market/assets',                                 6),
-      sec('strat25-cost',       'At What Cost — opportunity cost, timing, feasibility',   6),
-      sec('strat25-rec',        'Recommendation',                                         3),
+      sec('strat25-cost',       'At What Cost — cost to build and run, risk, opportunity cost, timing, feasibility', 6),
+      sec('strat25-rec',        'Recommendation + what would change my mind',             3),
+    ],
+  },
+  {
+    id: 'stakeholder-25',
+    name: 'Stakeholder 25min',
+    totalMinutes: 25,
+    isDefault: true,
+    sections: [
+      sec('sh25-clarify',  'Clarify — what shift, who it touches, by when',             1),
+      sec('sh25-map',      'Map — who decides, who does the work, who can block',       4),
+      sec('sh25-losegain', 'Lose + Gain — for each group; name the biggest loser',      3),
+      sec('sh25-problem',  'Shared Problem — in their words, not yours',                3),
+      sec('sh25-pilot',    'Prove Small — one team or partner first',                   4),
+      sec('sh25-cheap',    'Make It Cheap — do the migration work for them',            3),
+      sec('sh25-sequence', 'Sequence — ally first, then the hardest group',             3),
+      sec('sh25-lock',     'Lock It — shared metric + decision record + escalation',    2),
+      sec('sh25-risks',    'Risks',                                                     2),
     ],
   },
   {
@@ -129,6 +146,8 @@ export const DEFAULT_TEMPLATES: Template[] = [
 // sessions created before a hint existed still get it.
 export const SECTION_HINTS: Record<string, string> = {
   'ps30-audience': 'If stuck, split on one axis (e.g. frequency vs trust), pick one, name the person',
+  'strat25-hypothesis': 'Commit in one sentence. Under push: same pick, same reason',
+  'sd30-api': 'If money moves: idempotency, partial failure, reconciliation',
 };
 
 // "How to get on track" script, shown on demand when 2+ sections behind. Keyed by
